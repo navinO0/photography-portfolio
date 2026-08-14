@@ -146,14 +146,6 @@ export default function HeroSection({
 
       {/* Configurable Hero Content Container */}
       <div className={`relative z-20 w-full max-w-[1920px] px-4 sm:px-12 md:px-16 text-white flex flex-col max-w-2xl pt-20 sm:pt-28 ${getContentChildAlignment()}`}>
-        {/* Matrix Luxury Badge */}
-        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-none border border-amber-500/40 bg-black/80 backdrop-blur-md mb-3 sm:mb-4">
-          <Sparkles className="w-3 h-3 text-amber-400 shrink-0" />
-          <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.2em] sm:tracking-[0.25em] font-mono text-amber-400">
-            01 // Timeless Portraits For Everlasting Memories
-          </span>
-        </div>
-
         {/* Hero Title */}
         <TextReveal className="mb-2 sm:mb-3">
           <h1 className="text-base sm:text-xl md:text-2xl lg:text-3xl font-serif font-light tracking-[0.1em] sm:tracking-[0.12em] leading-tight sm:leading-snug text-white uppercase drop-shadow-2xl">
