@@ -254,14 +254,33 @@ export default function BookingForm({ whatsappNumber = '15552345678' }: BookingF
                 <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2">
                   Target Event Date *
                 </label>
-                <div className="relative">
-                  <Calendar className="w-5 h-5 text-amber-400/80 absolute left-4 top-1/2 -translate-y-1/2" />
+                <div
+                  className="relative cursor-pointer"
+                  onClick={(e) => {
+                    const inputEl = e.currentTarget.querySelector('input');
+                    if (inputEl && 'showPicker' in inputEl) {
+                      try {
+                        inputEl.showPicker();
+                      } catch (err) {
+                        inputEl.focus();
+                      }
+                    }
+                  }}
+                >
+                  <Calendar className="w-5 h-5 text-amber-400/80 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <input
                     type="date"
                     required
                     value={formData.eventDate}
                     onChange={(e) => handleChange('eventDate', e.target.value)}
-                    className="w-full pl-12 pr-4 py-3.5 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-sm focus:outline-none focus:border-amber-400"
+                    onClick={(e) => {
+                      if ('showPicker' in e.currentTarget) {
+                        try {
+                          e.currentTarget.showPicker();
+                        } catch (err) {}
+                      }
+                    }}
+                    className="w-full pl-12 pr-4 py-3.5 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-sm focus:outline-none focus:border-amber-400 cursor-pointer [color-scheme:dark]"
                   />
                 </div>
               </div>
