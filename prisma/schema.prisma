@@ -1,0 +1,246 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["photography"]
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+model Tenant {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  status    String   @default("ACTIVE") // ACTIVE, SUSPENDED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  settings TenantSettings?
+
+  @@map("tenants")
+  @@schema("photography")
+}
+
+model TenantSettings {
+  id                    String   @id @default(cuid())
+  tenantId              String   @unique
+  tenant                Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  logo                  String?
+  favicon               String?
+  primaryColor          String   @default("#0f172a")
+  secondaryColor        String   @default("#d97706")
+  accentColor           String   @default("#f59e0b")
+  fontFamily            String   @default("Inter")
+  photographerName      String   @default("Lumina Studios")
+  photographerTitle     String   @default("Fine Art & Cinematic Photographer")
+  bio                   String   @default("Crafting timeless visual stories for extraordinary moments across the globe.")
+  phone                 String   @default("+1 (555) 234-5678")
+  whatsapp              String   @default("15552345678")
+  email                 String   @default("contact@luminastudios.com")
+  address               String   @default("Studio 404, Art District, New York, NY")
+  socialInstagram       String?  @default("https://instagram.com")
+  socialFacebook        String?  @default("https://facebook.com")
+  socialYoutube         String?  @default("https://youtube.com")
+  heroTitle             String   @default("WE CAPTURE THE MOMENTS YOU NEVER WANT TO FORGET.")
+  heroSubtitle          String   @default("Cinematic wedding, portrait & editorial photography for luxury celebrations.")
+  heroMediaUrl          String?
+  heroContentPosition   String   @default("bottom-left") // bottom-left, center, bottom-center, top-left
+  heroGradientIntensity String   @default("heavy") // heavy, medium, subtle
+  heroCtaPrimaryText    String   @default("View Our Work")
+  heroCtaSecondaryText  String   @default("Book Your Date")
+  cardHoverGlow         Boolean  @default(true)
+  seoTitle              String   @default("Lumina Studios | Premium Luxury Photography")
+  seoDescription        String   @default("Award-winning cinematic photography studio specializing in luxury weddings, fashion, and editorial stories.")
+  featureFlags          Json     @default("{\"bookingEnabled\": true, \"testimonialsEnabled\": true, \"customCursor\": true, \"smoothScroll\": true}")
+  updatedAt             DateTime @updatedAt
+
+  @@index([tenantId])
+  @@map("tenant_settings")
+  @@schema("photography")
+}
+
+model PortfolioCategory {
+  id           String             @id @default(cuid())
+  tenantId     String
+  name         String
+  slug         String
+  description  String?
+  coverImage   String?
+  displayOrder Int                @default(0)
+  isActive     Boolean            @default(true)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  projects     PortfolioProject[]
+
+  @@unique([tenantId, slug])
+  @@index([tenantId])
+  @@index([tenantId, displayOrder])
+  @@map("portfolio_categories")
+  @@schema("photography")
+}
+
+model PortfolioProject {
+  id           String           @id @default(cuid())
+  tenantId     String
+  categoryId   String
+  category     PortfolioCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  title        String
+  slug         String
+  description  String?
+  location     String?
+  eventDate    DateTime?
+  coverImage   String
+  layoutMode   String           @default("masonry") // masonry, editorial, horizontal, filmstrip
+  featured     Boolean          @default(false)
+  displayOrder Int              @default(0)
+  isPublished  Boolean          @default(true)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  images       PortfolioImage[]
+
+  @@unique([tenantId, slug])
+  @@index([tenantId])
+  @@index([tenantId, categoryId])
+  @@index([tenantId, isPublished])
+  @@index([tenantId, displayOrder])
+  @@index([tenantId, eventDate])
+  @@map("portfolio_projects")
+  @@schema("photography")
+}
+
+model PortfolioImage {
+  id           String           @id @default(cuid())
+  tenantId     String
+  projectId    String
+  project      PortfolioProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  imageUrl     String
+  thumbnailUrl String?
+  altText      String?
+  caption      String?
+  width        Int              @default(1920)
+  height       Int              @default(1080)
+  displayOrder Int              @default(0)
+  createdAt    DateTime         @default(now())
+
+  @@index([tenantId])
+  @@index([tenantId, projectId])
+  @@index([tenantId, displayOrder])
+  @@map("portfolio_images")
+  @@schema("photography")
+}
+
+model Service {
+  id            String   @id @default(cuid())
+  tenantId      String
+  name          String
+  slug          String
+  description   String
+  priceStarting String?
+  features      Json     @default("[]")
+  image         String?
+  displayOrder  Int      @default(0)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([tenantId, slug])
+  @@index([tenantId])
+  @@index([tenantId, displayOrder])
+  @@map("services")
+  @@schema("photography")
+}
+
+model Testimonial {
+  id           String   @id @default(cuid())
+  tenantId     String
+  clientName   String
+  clientRole   String?
+  clientImage  String?
+  content      String
+  eventType    String?
+  rating       Int      @default(5)
+  displayOrder Int      @default(0)
+  isPublished  Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  @@index([tenantId])
+  @@index([tenantId, isPublished])
+  @@index([tenantId, displayOrder])
+  @@map("testimonials")
+  @@schema("photography")
+}
+
+model Booking {
+  id           String   @id @default(cuid())
+  tenantId     String
+  name         String
+  email        String
+  phone        String
+  eventType    String
+  eventDate    DateTime
+  location     String
+  guestCount   String?
+  budgetRange  String?
+  requirements String?
+  message      String?
+  status       String   @default("PENDING") // PENDING, CONFIRMED, COMPLETED, CANCELLED
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([tenantId])
+  @@index([tenantId, eventDate])
+  @@index([tenantId, status])
+  @@map("bookings")
+  @@schema("photography")
+}
+
+model Availability {
+  id        String   @id @default(cuid())
+  tenantId  String
+  date      DateTime
+  status    String   @default("AVAILABLE") // AVAILABLE, BOOKED, BLOCKED
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([tenantId, date])
+  @@index([tenantId])
+  @@index([tenantId, date])
+  @@map("availabilities")
+  @@schema("photography")
+}
+
+model ContactInquiry {
+  id        String   @id @default(cuid())
+  tenantId  String
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String
+  status    String   @default("NEW") // NEW, READ, RESPONDED
+  createdAt DateTime @default(now())
+
+  @@index([tenantId])
+  @@index([tenantId, status])
+  @@map("contact_inquiries")
+  @@schema("photography")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  tenantId     String
+  email        String
+  passwordHash String
+  name         String
+  role         String   @default("ADMIN") // ADMIN, PHOTOGRAPHER
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([tenantId, email])
+  @@index([tenantId])
+  @@map("users")
+  @@schema("photography")
+}

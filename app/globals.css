@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: var(--primary-color, #f59e0b);
+  --color-secondary: var(--secondary-color, #0f172a);
+  --color-accent: var(--accent-color, #fbbf24);
+
+  --color-amber-300: var(--accent-color, #fcd34d);
+  --color-amber-400: var(--primary-color, #fbbf24);
+  --color-amber-500: var(--primary-color, #f59e0b);
+  --color-amber-600: var(--primary-color, #d97706);
+
+  --color-slate-950: var(--secondary-color, #0b0f19);
+
+  --font-serif: var(--font-family, "Playfair Display", serif);
+}
+
+:root {
+  --primary-color: #f59e0b;
+  --secondary-color: #0b0f19;
+  --accent-color: #fbbf24;
+  --font-family: "Playfair Display", serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--secondary-color, #0b0f19);
+    color: #f8fafc;
+    font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+  }
+}
+
+@keyframes kenBurns {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-ken-burns {
+  animation: kenBurns 20s ease-in-out infinite alternate;
+}
+
+/* Hide scrollbar for Chrome, Safari, Opera and WebKit */
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar,
+.scrollbar-none {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;  /* Firefox */
+  -webkit-overflow-scrolling: touch; /* Native smooth momentum touch scrolling */
+}
+
+/* Dynamic selection highlight */
+::selection {
+  background-color: rgba(245, 158, 11, 0.4);
+  color: #fff;
+}
+
+/* Performance & Hardware Compositing Optimizations */
+.animate-ken-burns {
+  animation: kenBurns 20s ease-in-out infinite alternate;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
+}

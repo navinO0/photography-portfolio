@@ -1,0 +1,146 @@
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+import { Check, Sparkles, ArrowUpRight, Camera, Zap } from 'lucide-react';
+import { getOptimizedImageUrl } from '@/lib/image-optimization';
+
+interface ServicePackage {
+  id: string;
+  name: string;
+  description: string;
+  priceStarting?: string | null;
+  image?: string | null;
+  features?: any;
+}
+
+interface PackagesImageShowcaseProps {
+  services: ServicePackage[];
+}
+
+const DEFAULT_PACKAGE_IMAGES = [
+  'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1200&auto=format&fit=crop',
+];
+
+export default function PackagesImageShowcase({ services }: PackagesImageShowcaseProps) {
+  if (!services || services.length === 0) return null;
+
+  return (
+    <section className="bg-slate-950 py-3 sm:py-10 text-slate-100 border-t border-slate-900 w-full overflow-hidden cv-auto">
+      <div className="w-full max-w-[1920px] mx-auto px-0.5 sm:px-8 md:px-12">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-6 mb-3 sm:mb-8 px-2 sm:px-0">
+          <div>
+            <div className="flex items-center gap-3 mb-1.5 sm:mb-2">
+              <span className="text-[10px] sm:text-xs uppercase tracking-[0.3em] font-mono text-amber-400">
+                02 / Investment & Commissions
+              </span>
+            </div>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif font-light text-slate-100">
+              Handcrafted Photography Packages
+            </h2>
+          </div>
+
+          <Link
+            href="/services"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-none border border-amber-500/40 bg-slate-900/80 hover:bg-amber-500 hover:text-slate-950 font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] transition-all text-amber-400 shrink-0 self-start md:self-auto"
+          >
+            <span>View All Packages</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        {/* Editorial Packages Grid (Details Overlaid Directly On High-Fashion Images) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-6 md:gap-8">
+          {services.map((srv, idx) => {
+            const bgImage = srv.image || DEFAULT_PACKAGE_IMAGES[idx % DEFAULT_PACKAGE_IMAGES.length];
+            const featuresList = (Array.isArray(srv.features) ? srv.features : []) as string[];
+
+            return (
+              <div
+                key={srv.id}
+                className="group relative rounded-none overflow-hidden bg-slate-900 border border-slate-800/80 shadow-2xl transition-all duration-500 hover:border-amber-500/80 min-h-[480px] sm:min-h-[540px] flex flex-col justify-between"
+              >
+                {/* Background Image Poster */}
+                <div className="absolute inset-0 z-0">
+                  {/* eslint-disable-next-app-element */}
+                  <img
+                    src={getOptimizedImageUrl(bgImage, 'balanced')}
+                    alt={srv.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 block"
+                  />
+                  {/* Gradient Overlays for Maximum Readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/30 group-hover:via-slate-950/60 transition-colors" />
+                </div>
+
+                {/* Corner Frame Accents */}
+                <div className="absolute top-0 left-0 w-6 h-6 sm:w-8 sm:h-8 border-l-2 border-t-2 border-amber-400/80 z-20 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-0 right-0 w-6 h-6 sm:w-8 sm:h-8 border-r-2 border-b-2 border-amber-400/80 z-20 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
+
+                {/* Top Overlay Badges */}
+                <div className="relative z-10 p-3 sm:p-6 flex items-center justify-between gap-2">
+                  <span className="px-2.5 py-1 bg-slate-950/80 backdrop-blur-md text-[8px] sm:text-[10px] uppercase font-mono text-amber-400 border border-amber-500/30">
+                    PACKAGE 0{idx + 1}
+                  </span>
+
+                  {srv.priceStarting && (
+                    <span className="px-2.5 py-1 bg-amber-500 text-slate-950 font-mono font-bold text-[9px] sm:text-xs uppercase tracking-widest shadow-lg">
+                      STARTING {srv.priceStarting}
+                    </span>
+                  )}
+                </div>
+
+                {/* Bottom Content Overlay Stack directly on poster image */}
+                <div className="relative z-10 bg-slate-950/65 backdrop-blur-md border-t border-slate-800/60 p-4 sm:p-6 space-y-2.5 sm:space-y-4">
+                  {/* Package Title */}
+                  <h3 className="text-base sm:text-2xl font-serif text-slate-100 font-light leading-snug">
+                    {srv.name}
+                  </h3>
+
+                  {/* Description - Truncated clean 2 lines without text double-rendering */}
+                  <p className="text-[11px] sm:text-xs text-slate-300 font-light leading-relaxed line-clamp-2 overflow-hidden text-ellipsis block">
+                    {srv.description}
+                  </p>
+
+                  {/* Feature Highlights Pills Overlaid */}
+                  {featuresList.length > 0 && (
+                    <div className="pt-1 flex flex-wrap gap-1.5 sm:gap-2">
+                      {featuresList.slice(0, 3).map((feat, fIdx) => (
+                        <span
+                          key={fIdx}
+                          className="px-2 py-0.5 bg-slate-900/90 border border-slate-800 text-[9px] sm:text-[10px] font-mono text-slate-200 flex items-center gap-1.5 max-w-full"
+                        >
+                          <Check className="w-3 h-3 text-amber-400 shrink-0" />
+                          <span className="truncate">{feat}</span>
+                        </span>
+                      ))}
+                      {featuresList.length > 3 && (
+                        <span className="px-2 py-0.5 bg-slate-900/90 border border-slate-800 text-[9px] font-mono text-amber-400">
+                          +{featuresList.length - 3} MORE
+                        </span>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Action CTA Button */}
+                  <div className="pt-1.5">
+                    <Link
+                      href="/booking"
+                      className="w-full py-2.5 sm:py-3 px-4 rounded-none bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-bold text-xs uppercase tracking-[0.2em] text-center transition-all flex items-center justify-center gap-2 shadow-xl group-hover:shadow-amber-500/20"
+                    >
+                      <span>Commission Package</span>
+                      <ArrowUpRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
