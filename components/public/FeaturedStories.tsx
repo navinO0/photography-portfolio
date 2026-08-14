@@ -135,8 +135,8 @@ export default function FeaturedStories({ projects }: FeaturedStoriesProps) {
       </div>
 
       {layoutMode === 'grid' ? (
-        /* Dynamic 3-Column Luxury Portfolio Grid */
-        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        /* Dynamic 3-Column Luxury Portfolio Grid (Full-bleed Edge-to-Edge on Mobile) */
+        <div className="w-full max-w-[1920px] mx-auto px-0 sm:px-8 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {filteredProjects.map((proj, idx) => {
             // Elegant aspect ratio variations for masonry feel
             const aspectRatios = ['aspect-[4/5]', 'aspect-[3/4]', 'aspect-[4/5]', 'aspect-[16/11]'];
