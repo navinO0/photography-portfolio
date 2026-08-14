@@ -51,7 +51,10 @@ const DEFAULT_INSTAGRAM_POSTS = [
   'https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=400&auto=format&fit=crop',
 ];
 
+import { useRouter } from 'next/navigation';
+
 export default function AdminSettingsForm({ initialSettings }: AdminSettingsFormProps) {
+  const router = useRouter();
   const [formData, setFormData] = useState<TenantSettingsData>({
     heroContentPosition: 'bottom-left',
     heroGradientIntensity: 'heavy',
@@ -133,6 +136,7 @@ export default function AdminSettingsForm({ initialSettings }: AdminSettingsForm
 
       if (res.ok) {
         setSuccessMsg(true);
+        router.refresh();
         setTimeout(() => setSuccessMsg(false), 5000);
       }
     } catch (err) {

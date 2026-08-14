@@ -1,7 +1,9 @@
 import { db } from '@/lib/db';
 import { getTenantId } from '@/lib/tenant';
+import { unstable_noStore as noStore } from 'next/cache';
 
 export async function getTenantSettings() {
+  noStore();
   const tenantId = getTenantId();
   
   let settings = await db.tenantSettings.findUnique({
