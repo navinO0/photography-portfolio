@@ -244,6 +244,13 @@ export default function Footer({
             </Link>
           </p>
         </div>
+
+        {/* Demo Website Disclaimer */}
+        <div className="mt-6 pt-4 border-t border-slate-900/80 text-center">
+          <p className="text-[9px] sm:text-xs text-slate-400 font-mono leading-relaxed max-w-3xl mx-auto px-4">
+            <span className="text-amber-400 font-semibold uppercase tracking-wider">Disclaimer:</span> This is a demonstration website. The content used on this website is for demo purposes only. If it violates any guidelines, please <Link href="/contact" className="text-amber-400 underline hover:text-amber-300">contact us</Link>.
+          </p>
+        </div>
       </div>
     </footer>
   );
