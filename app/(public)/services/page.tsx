@@ -35,7 +35,17 @@ export default async function ServicesPage() {
       {/* Services Grid - 2px Side Padding on Mobile Screen */}
       <div className="w-full max-w-[1920px] mx-auto px-0.5 sm:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8 mb-20 sm:mb-24">
         {services.map((srv) => {
-          const featuresList = (srv.features as string[]) || [];
+          let featuresList: string[] = [];
+          if (Array.isArray(srv.features)) {
+            featuresList = srv.features as string[];
+          } else if (typeof srv.features === 'string') {
+            try {
+              featuresList = JSON.parse(srv.features);
+            } catch {
+              featuresList = [srv.features];
+            }
+          }
+
           return (
             <div
               key={srv.id}

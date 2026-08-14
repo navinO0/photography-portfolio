@@ -37,6 +37,17 @@ export async function getTenantSettings() {
     ogImage: flags.ogImage || settings.heroMediaUrl || 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop',
     twitterHandle: flags.twitterHandle || '@luminastudios',
     siteUrl: flags.siteUrl || 'https://luminastudios.com',
+    philosophyTag: flags.philosophyTag || '04 / STUDIO PHILOSOPHY',
+    philosophyQuote: flags.philosophyQuote || '"We don\'t take photographs; we document unscripted emotional history."',
+    philosophyBody: flags.philosophyBody || settings.bio || 'We craft cinematic visual legacies for royalty, luxury weddings, high fashion, and monumental lifetime celebrations worldwide.',
+    philosophySubbody: flags.philosophySubbody || 'Every framing is meticulously composed using natural daylight, directional shadow, and authentic cinematic storytelling. Whether high on the cliffs of Amalfi or inside candlelit Parisian châteaux, our mission remains unchanged: crafting heirloom imagery that elevates life\'s most sacred chapters into pure art.',
+    philosophyImage: flags.philosophyImage || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1200&auto=format&fit=crop',
+    philosophyAwardTitle: flags.philosophyAwardTitle || 'Top 10 Global Masters',
+    philosophyAwardSub: flags.philosophyAwardSub || 'Recognized by Vogue Weddings & International Photography Guild.',
+    philosophyCred1Title: flags.philosophyCred1Title || 'Global Travel',
+    philosophyCred1Sub: flags.philosophyCred1Sub || 'Available across Europe, USA & Asia',
+    philosophyCred2Title: flags.philosophyCred2Title || 'Medium Format',
+    philosophyCred2Sub: flags.philosophyCred2Sub || 'Hasselblad & Leica glass quality',
   };
 }
 
@@ -90,6 +101,17 @@ export async function updateTenantSettings(inputData: Record<string, any>) {
     ...(inputData.ogImage !== undefined ? { ogImage: inputData.ogImage } : {}),
     ...(inputData.twitterHandle !== undefined ? { twitterHandle: inputData.twitterHandle } : {}),
     ...(inputData.siteUrl !== undefined ? { siteUrl: inputData.siteUrl } : {}),
+    ...(inputData.philosophyTag !== undefined ? { philosophyTag: inputData.philosophyTag } : {}),
+    ...(inputData.philosophyQuote !== undefined ? { philosophyQuote: inputData.philosophyQuote } : {}),
+    ...(inputData.philosophyBody !== undefined ? { philosophyBody: inputData.philosophyBody } : {}),
+    ...(inputData.philosophySubbody !== undefined ? { philosophySubbody: inputData.philosophySubbody } : {}),
+    ...(inputData.philosophyImage !== undefined ? { philosophyImage: inputData.philosophyImage } : {}),
+    ...(inputData.philosophyAwardTitle !== undefined ? { philosophyAwardTitle: inputData.philosophyAwardTitle } : {}),
+    ...(inputData.philosophyAwardSub !== undefined ? { philosophyAwardSub: inputData.philosophyAwardSub } : {}),
+    ...(inputData.philosophyCred1Title !== undefined ? { philosophyCred1Title: inputData.philosophyCred1Title } : {}),
+    ...(inputData.philosophyCred1Sub !== undefined ? { philosophyCred1Sub: inputData.philosophyCred1Sub } : {}),
+    ...(inputData.philosophyCred2Title !== undefined ? { philosophyCred2Title: inputData.philosophyCred2Title } : {}),
+    ...(inputData.philosophyCred2Sub !== undefined ? { philosophyCred2Sub: inputData.philosophyCred2Sub } : {}),
   };
 
   const payload: Record<string, any> = {};

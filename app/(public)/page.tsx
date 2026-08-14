@@ -46,6 +46,17 @@ export default async function HomePage() {
         photographerName={settings.photographerName}
         photographerTitle={settings.photographerTitle}
         bio={settings.bio}
+        philosophyTag={settings.philosophyTag}
+        philosophyQuote={settings.philosophyQuote}
+        philosophyBody={settings.philosophyBody}
+        philosophySubbody={settings.philosophySubbody}
+        philosophyImage={settings.philosophyImage}
+        philosophyAwardTitle={settings.philosophyAwardTitle}
+        philosophyAwardSub={settings.philosophyAwardSub}
+        philosophyCred1Title={settings.philosophyCred1Title}
+        philosophyCred1Sub={settings.philosophyCred1Sub}
+        philosophyCred2Title={settings.philosophyCred2Title}
+        philosophyCred2Sub={settings.philosophyCred2Sub}
       />
 
       {/* 6. Testimonials Showcase */}

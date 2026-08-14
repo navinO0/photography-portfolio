@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ThemePreset } from '@/lib/themes';
 import ThemePresetsSelector from './ThemePresetsSelector';
-import { Save, CheckCircle2, RefreshCw, Eye, Sparkles, Calendar, ArrowRight, Layout, Sliders, Zap, Gauge, ImageIcon, Globe, UploadCloud } from 'lucide-react';
+import { Save, CheckCircle2, RefreshCw, Eye, Sparkles, Calendar, ArrowRight, Layout, Sliders, Zap, Gauge, ImageIcon, Globe, UploadCloud, BookOpen, Quote } from 'lucide-react';
 import { uploadToCloudinaryWithRetry } from '@/lib/cloudinaryUpload';
 import { useToast } from '@/components/ui/Toast';
 
@@ -41,6 +41,17 @@ interface TenantSettingsData {
   ogImage?: string;
   twitterHandle?: string;
   siteUrl?: string;
+  philosophyTag?: string;
+  philosophyQuote?: string;
+  philosophyBody?: string;
+  philosophySubbody?: string;
+  philosophyImage?: string;
+  philosophyAwardTitle?: string;
+  philosophyAwardSub?: string;
+  philosophyCred1Title?: string;
+  philosophyCred1Sub?: string;
+  philosophyCred2Title?: string;
+  philosophyCred2Sub?: string;
   primaryColor: string;
   secondaryColor: string;
   accentColor: string;
@@ -68,6 +79,7 @@ export default function AdminSettingsForm({ initialSettings }: AdminSettingsForm
   const { showToast } = useToast();
   const [uploadingFavicon, setUploadingFavicon] = useState(false);
   const [uploadingOgImage, setUploadingOgImage] = useState(false);
+  const [uploadingPhilosophyImage, setUploadingPhilosophyImage] = useState(false);
   const [formData, setFormData] = useState<TenantSettingsData>({
     heroContentPosition: 'bottom-left',
     heroGradientIntensity: 'heavy',
@@ -94,6 +106,25 @@ export default function AdminSettingsForm({ initialSettings }: AdminSettingsForm
       showToast(err.message || 'Favicon upload failed.', 'error');
     } finally {
       setUploadingFavicon(false);
+    }
+  };
+
+  const handlePhilosophyImageFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingPhilosophyImage(true);
+    try {
+      showToast('Uploading philosophy portrait image to Cloudinary...', 'info');
+      const url = await uploadToCloudinaryWithRetry(file, (msg, type) => {
+        showToast(msg, type);
+      });
+      setFormData((prev) => ({ ...prev, philosophyImage: url }));
+      showToast('Philosophy image uploaded successfully!', 'success');
+    } catch (err: any) {
+      showToast(err.message || 'Philosophy image upload failed.', 'error');
+    } finally {
+      setUploadingPhilosophyImage(false);
     }
   };
 
@@ -443,6 +474,212 @@ export default function AdminSettingsForm({ initialSettings }: AdminSettingsForm
             placeholder="https://images.unsplash.com/... or custom cover URL"
             className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono"
           />
+        </div>
+      </div>
+
+      {/* Studio Philosophy & Editorial Narrative Section Customizer */}
+      <div className="bg-slate-900/80 border border-slate-800 rounded-none p-8 space-y-6">
+        <div className="flex items-center gap-3 border-b border-slate-800 pb-4">
+          <div className="w-8 h-8 rounded-none bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+            <Quote className="w-4 h-4" />
+          </div>
+          <div>
+            <h3 className="text-lg font-serif text-slate-100">Studio Philosophy & Editorial Section</h3>
+            <p className="text-xs text-slate-400 font-mono">
+              Customize the homepage Studio Philosophy quote, storytelling narrative paragraphs, portrait image, and global recognition award text
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2">
+              Section Tag Badge
+            </label>
+            <input
+              type="text"
+              name="philosophyTag"
+              value={formData.philosophyTag || '04 / STUDIO PHILOSOPHY'}
+              onChange={handleChange}
+              placeholder="04 / STUDIO PHILOSOPHY"
+              className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2">
+              Main Philosophy Quote Heading
+            </label>
+            <input
+              type="text"
+              name="philosophyQuote"
+              value={formData.philosophyQuote || `"We don't take photographs; we document unscripted emotional history."`}
+              onChange={handleChange}
+              placeholder={`"We don't take photographs; we document unscripted emotional history."`}
+              className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2">
+            Primary Legacy Narrative (Paragraph 1)
+          </label>
+          <textarea
+            name="philosophyBody"
+            rows={3}
+            value={formData.philosophyBody || formData.bio || ''}
+            onChange={handleChange}
+            placeholder="We craft cinematic visual legacies for royalty, luxury weddings, high fashion, and monumental lifetime celebrations worldwide."
+            className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono leading-relaxed"
+          />
+        </div>
+
+        <div>
+          <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2">
+            Secondary Storytelling Narrative (Paragraph 2)
+          </label>
+          <textarea
+            name="philosophySubbody"
+            rows={3}
+            value={formData.philosophySubbody || ''}
+            onChange={handleChange}
+            placeholder="Every framing is meticulously composed using natural daylight, directional shadow, and authentic cinematic storytelling..."
+            className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono leading-relaxed"
+          />
+        </div>
+
+        {/* Philosophy Portrait Image URL + Cloudinary Upload */}
+        <div>
+          <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2 flex items-center justify-between">
+            <span>Philosophy Portrait Image URL / Upload</span>
+            {uploadingPhilosophyImage && (
+              <span className="text-[10px] text-amber-400 animate-pulse font-mono">Uploading Cloudinary...</span>
+            )}
+          </label>
+          <div className="flex items-center gap-3">
+            {formData.philosophyImage ? (
+              /* eslint-disable-next-app-element */
+              <img
+                src={formData.philosophyImage}
+                alt="Philosophy Preview"
+                className="w-12 h-14 rounded-none border border-amber-500/50 object-cover shrink-0 bg-slate-950"
+              />
+            ) : (
+              <div className="w-12 h-14 rounded-none border border-slate-800 bg-slate-950 flex items-center justify-center text-slate-500 text-[10px] font-mono shrink-0">
+                PORTRAIT
+              </div>
+            )}
+            <input
+              type="text"
+              name="philosophyImage"
+              value={formData.philosophyImage || ''}
+              onChange={handleChange}
+              placeholder="https://images.unsplash.com/... or custom portrait image URL"
+              className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono focus:border-amber-400 transition-colors"
+            />
+            <label className="px-4 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase font-mono tracking-widest cursor-pointer flex items-center justify-center shrink-0 border border-amber-400 transition-colors">
+              {uploadingPhilosophyImage ? (
+                <RefreshCw className="w-4 h-4 animate-spin" />
+              ) : (
+                <UploadCloud className="w-4 h-4" />
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handlePhilosophyImageFileUpload}
+              />
+            </label>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2 border-t border-slate-800/80">
+          <div>
+            <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2">
+              Floating Award Card Title
+            </label>
+            <input
+              type="text"
+              name="philosophyAwardTitle"
+              value={formData.philosophyAwardTitle || 'Top 10 Global Masters'}
+              onChange={handleChange}
+              placeholder="Top 10 Global Masters"
+              className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2">
+              Floating Award Card Description
+            </label>
+            <input
+              type="text"
+              name="philosophyAwardSub"
+              value={formData.philosophyAwardSub || 'Recognized by Vogue Weddings & International Photography Guild.'}
+              onChange={handleChange}
+              placeholder="Recognized by Vogue Weddings..."
+              className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-slate-800/80">
+          <div>
+            <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2">
+              Credential #1 Title
+            </label>
+            <input
+              type="text"
+              name="philosophyCred1Title"
+              value={formData.philosophyCred1Title || 'Global Travel'}
+              onChange={handleChange}
+              placeholder="Global Travel"
+              className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2">
+              Credential #1 Subtitle
+            </label>
+            <input
+              type="text"
+              name="philosophyCred1Sub"
+              value={formData.philosophyCred1Sub || 'Available across Europe, USA & Asia'}
+              onChange={handleChange}
+              placeholder="Available across Europe..."
+              className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2">
+              Credential #2 Title
+            </label>
+            <input
+              type="text"
+              name="philosophyCred2Title"
+              value={formData.philosophyCred2Title || 'Medium Format'}
+              onChange={handleChange}
+              placeholder="Medium Format"
+              className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2">
+              Credential #2 Subtitle
+            </label>
+            <input
+              type="text"
+              name="philosophyCred2Sub"
+              value={formData.philosophyCred2Sub || 'Hasselblad & Leica glass quality'}
+              onChange={handleChange}
+              placeholder="Hasselblad & Leica..."
+              className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono"
+            />
+          </div>
         </div>
       </div>
 

@@ -1,7 +1,7 @@
 import { getAdminSession } from '@/services/auth.service';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { Camera, LayoutDashboard, Image as ImageIcon, Calendar, Settings, LogOut, ArrowUpRight } from 'lucide-react';
+import { Camera, LayoutDashboard, Image as ImageIcon, Layers, Calendar, Settings, LogOut, ArrowUpRight } from 'lucide-react';
 import { ToastProvider } from '@/components/ui/Toast';
 import DynamicThemeProvider from '@/components/providers/DynamicThemeProvider';
 import { getTenantSettings } from '@/services/settings.service';
@@ -22,6 +22,7 @@ export default async function AdminDashboardLayout({
   const navItems = [
     { name: 'Overview', href: '/admin', icon: LayoutDashboard },
     { name: 'Projects & Galleries', href: '/admin/projects', icon: ImageIcon },
+    { name: 'Packages & Pricing', href: '/admin/packages', icon: Layers },
     { name: 'Bookings & Dates', href: '/admin/bookings', icon: Calendar },
     { name: 'Studio Settings', href: '/admin/settings', icon: Settings },
   ];
