@@ -25,6 +25,18 @@ export default async function ProjectStoryPage({ params }: ProjectStoryPageProps
     getRelatedProjects(project.id, project.categoryId),
   ]);
 
+  const getGradientOpacityClass = (intensity?: string) => {
+    switch (intensity) {
+      case 'subtle':
+        return 'from-slate-950/70 via-slate-950/30 to-transparent';
+      case 'medium':
+        return 'from-slate-950/85 via-slate-950/50 to-slate-950/20';
+      case 'heavy':
+      default:
+        return 'from-slate-950 via-slate-950/75 to-slate-950/30';
+    }
+  };
+
   return (
     <article className="bg-slate-950 min-h-screen text-slate-100 pb-10 sm:pb-24 w-full overflow-hidden">
       {/* Cinematic Full-Bleed Hero Poster Section */}
@@ -36,9 +48,9 @@ export default async function ProjectStoryPage({ params }: ProjectStoryPageProps
             alt={project.title}
             className="w-full h-full object-cover scale-105"
           />
-          {/* Multi-layer Gradient Dark Overlay for Maximum Readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/30" />
-          <div className="absolute inset-0 bg-slate-950/20" />
+          {/* Admin Configured Dynamic Multi-layer Gradient Dark Overlay */}
+          <div className={`absolute inset-0 bg-gradient-to-t ${getGradientOpacityClass(settings.heroGradientIntensity)} z-10`} />
+          <div className={`absolute inset-0 bg-gradient-to-r ${getGradientOpacityClass(settings.heroGradientIntensity)} z-10`} />
         </div>
 
         {/* Back to Portfolio Link - Floating Top Left */}
