@@ -36,6 +36,15 @@ export default async function AdminSettingsPage() {
           secondaryColor: settings.secondaryColor || '#0f172a',
           accentColor: settings.accentColor || '#fbbf24',
           fontFamily: settings.fontFamily || 'Playfair Display, serif',
+          favicon: settings.favicon || '',
+          seoTitle: settings.seoTitle || '',
+          seoDescription: settings.seoDescription || '',
+          seoKeywords: settings.seoKeywords || '',
+          ogImage: settings.ogImage || '',
+          twitterHandle: settings.twitterHandle || '',
+          siteUrl: settings.siteUrl || '',
+          imageFetchQuality: settings.imageFetchQuality || 'balanced',
+          featureFlags: settings.featureFlags || {},
         }}
       />
     </div>

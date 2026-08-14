@@ -11,6 +11,11 @@
   --color-amber-600: var(--primary-color, #d97706);
 
   --color-slate-950: var(--secondary-color, #0b0f19);
+  --color-slate-900: var(--slate-900-color, #0f172a);
+  --color-slate-800: var(--slate-800-color, #1e293b);
+  --color-slate-100: var(--slate-100-color, #f8fafc);
+  --color-slate-200: var(--slate-200-color, #e2e8f0);
+  --color-slate-300: var(--slate-300-color, #cbd5e1);
 
   --font-serif: var(--font-family, "Playfair Display", serif);
 }
@@ -26,7 +31,7 @@
   html {
     scroll-behavior: smooth;
     background-color: var(--secondary-color, #0b0f19);
-    color: #f8fafc;
+    color: var(--color-slate-100, #f8fafc);
     font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
   }
 }

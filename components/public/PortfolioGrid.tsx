@@ -162,16 +162,16 @@ export default function PortfolioGrid({ categories, projects }: PortfolioGridPro
                   <div className="absolute top-0 left-0 w-6 h-6 sm:w-8 sm:h-8 border-l-2 border-t-2 border-amber-400/80 z-20 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
                   <div className="absolute bottom-0 right-0 w-6 h-6 sm:w-8 sm:h-8 border-r-2 border-b-2 border-amber-400/80 z-20 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
 
-                  {/* Gradient Dark Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-85 group-hover:opacity-95 transition-opacity" />
+                  {/* Gradient Dark Overlay (ALWAYS black dark gradient for photo legibility) */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-85 group-hover:opacity-95 transition-opacity" />
 
                   {/* Top-Right Action Arrow & Frame Index Metadata */}
                   <div className="absolute top-1.5 right-1.5 sm:top-6 sm:right-6 z-20 flex items-center gap-1 sm:gap-2">
-                    <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-none bg-slate-950/80 backdrop-blur-md border border-amber-500/30 text-[9px] uppercase font-mono text-amber-400">
+                    <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-none bg-black/80 backdrop-blur-md border border-amber-500/30 text-[9px] uppercase font-mono text-amber-400">
                       <Camera className="w-3 h-3" />
                       <span>FRAME 0{idx + 1}</span>
                     </span>
-                    <div className="w-5 h-5 sm:w-10 sm:h-10 rounded-none bg-slate-950/80 backdrop-blur-md border border-amber-500/40 flex items-center justify-center text-amber-400 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-slate-950 transition-all">
+                    <div className="w-5 h-5 sm:w-10 sm:h-10 rounded-none bg-black/80 backdrop-blur-md border border-amber-500/40 flex items-center justify-center text-amber-400 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-slate-950 transition-all">
                       <ArrowUpRight className="w-3 h-3 sm:w-5 sm:h-5" />
                     </div>
                   </div>
@@ -184,7 +184,7 @@ export default function PortfolioGrid({ categories, projects }: PortfolioGridPro
                         {proj.category.name}
                       </span>
                     </div>
-                    <h3 className="text-xs sm:text-2xl md:text-3xl font-serif text-slate-100 group-hover:text-amber-300 transition-colors leading-snug line-clamp-2 font-normal">
+                    <h3 className="text-xs sm:text-2xl md:text-3xl font-serif text-white group-hover:text-amber-300 transition-colors leading-snug line-clamp-2 font-normal">
                       {proj.title}
                     </h3>
                   </div>

@@ -62,7 +62,7 @@ export default function PackagesImageShowcase({ services }: PackagesImageShowcas
             return (
               <div
                 key={srv.id}
-                className="group relative rounded-none overflow-hidden bg-slate-900 border border-slate-800/80 shadow-2xl transition-all duration-500 hover:border-amber-500/80 min-h-[480px] sm:min-h-[540px] flex flex-col justify-between"
+                className="group relative rounded-none overflow-hidden bg-slate-900 border border-slate-800 shadow-2xl transition-all duration-500 hover:border-amber-500/80 min-h-[480px] sm:min-h-[540px] flex flex-col justify-between"
               >
                 {/* Background Image Poster */}
                 <div className="absolute inset-0 z-0">
@@ -72,8 +72,8 @@ export default function PackagesImageShowcase({ services }: PackagesImageShowcas
                     alt={srv.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 block"
                   />
-                  {/* Gradient Overlays for Maximum Readability */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/30 group-hover:via-slate-950/60 transition-colors" />
+                  {/* Gradient Overlays for Readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:via-black/30 transition-colors" />
                 </div>
 
                 {/* Corner Frame Accents */}
@@ -82,25 +82,25 @@ export default function PackagesImageShowcase({ services }: PackagesImageShowcas
 
                 {/* Top Overlay Badges */}
                 <div className="relative z-10 p-3 sm:p-6 flex items-center justify-between gap-2">
-                  <span className="px-2.5 py-1 bg-slate-950/80 backdrop-blur-md text-[8px] sm:text-[10px] uppercase font-mono text-amber-400 border border-amber-500/30">
+                  <span className="px-2.5 py-1 bg-slate-900/90 backdrop-blur-md text-[8px] sm:text-[10px] uppercase font-mono text-amber-400 border border-amber-500/30">
                     PACKAGE 0{idx + 1}
                   </span>
 
                   {srv.priceStarting && (
-                    <span className="px-2.5 py-1 bg-amber-500 text-slate-950 font-mono font-bold text-[9px] sm:text-xs uppercase tracking-widest shadow-lg">
+                    <span className="px-2.5 py-1 bg-amber-500 text-black font-mono font-bold text-[9px] sm:text-xs uppercase tracking-widest shadow-lg">
                       STARTING {srv.priceStarting}
                     </span>
                   )}
                 </div>
 
-                {/* Bottom Content Overlay Stack directly on poster image */}
-                <div className="relative z-10 bg-slate-950/65 backdrop-blur-md border-t border-slate-800/60 p-4 sm:p-6 space-y-2.5 sm:space-y-4">
+                {/* Bottom Content Overlay Stack - Adapts dynamically to selected light/dark theme */}
+                <div className="relative z-10 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 p-4 sm:p-6 space-y-2.5 sm:space-y-4">
                   {/* Package Title */}
-                  <h3 className="text-base sm:text-2xl font-serif text-slate-100 font-light leading-snug">
+                  <h3 className="text-base sm:text-2xl font-serif text-slate-100 font-normal leading-snug">
                     {srv.name}
                   </h3>
 
-                  {/* Description - Truncated clean 2 lines without text double-rendering */}
+                  {/* Description - Dynamic text color adapting to light/dark theme */}
                   <p className="text-[11px] sm:text-xs text-slate-300 font-light leading-relaxed line-clamp-2 overflow-hidden text-ellipsis block">
                     {srv.description}
                   </p>
@@ -111,14 +111,14 @@ export default function PackagesImageShowcase({ services }: PackagesImageShowcas
                       {featuresList.slice(0, 3).map((feat, fIdx) => (
                         <span
                           key={fIdx}
-                          className="px-2 py-0.5 bg-slate-900/90 border border-slate-800 text-[9px] sm:text-[10px] font-mono text-slate-200 flex items-center gap-1.5 max-w-full"
+                          className="px-2 py-0.5 bg-slate-800/90 border border-slate-700/80 text-[9px] sm:text-[10px] font-mono text-slate-200 flex items-center gap-1.5 max-w-full"
                         >
                           <Check className="w-3 h-3 text-amber-400 shrink-0" />
                           <span className="truncate">{feat}</span>
                         </span>
                       ))}
                       {featuresList.length > 3 && (
-                        <span className="px-2 py-0.5 bg-slate-900/90 border border-slate-800 text-[9px] font-mono text-amber-400">
+                        <span className="px-2 py-0.5 bg-slate-800/90 border border-slate-700/80 text-[9px] font-mono text-amber-400">
                           +{featuresList.length - 3} MORE
                         </span>
                       )}
@@ -129,10 +129,10 @@ export default function PackagesImageShowcase({ services }: PackagesImageShowcas
                   <div className="pt-1.5">
                     <Link
                       href="/booking"
-                      className="w-full py-2.5 sm:py-3 px-4 rounded-none bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-bold text-xs uppercase tracking-[0.2em] text-center transition-all flex items-center justify-center gap-2 shadow-xl group-hover:shadow-amber-500/20"
+                      className="w-full py-2.5 sm:py-3 px-4 rounded-none bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-[0.2em] text-center transition-all flex items-center justify-center gap-2 shadow-xl"
                     >
                       <span>Commission Package</span>
-                      <ArrowUpRight className="w-4 h-4" />
+                      <ArrowUpRight className="w-4 h-4 text-black" />
                     </Link>
                   </div>
                 </div>

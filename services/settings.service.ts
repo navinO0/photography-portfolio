@@ -33,6 +33,10 @@ export async function getTenantSettings() {
   return {
     ...settings,
     imageFetchQuality: flags.imageFetchQuality || 'balanced',
+    seoKeywords: flags.seoKeywords || 'photography, luxury wedding, fashion photographer, editorial photography, destination wedding, fine art portraits',
+    ogImage: flags.ogImage || settings.heroMediaUrl || 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop',
+    twitterHandle: flags.twitterHandle || '@luminastudios',
+    siteUrl: flags.siteUrl || 'https://luminastudios.com',
   };
 }
 
@@ -77,11 +81,15 @@ export async function updateTenantSettings(inputData: Record<string, any>) {
   const existingFlags = (existing?.featureFlags as Record<string, any>) || {};
   const inputFlags = (inputData.featureFlags as Record<string, any>) || {};
 
-  // Preserve imageFetchQuality and existing featureFlags safely in JSON
+  // Preserve imageFetchQuality, SEO fields and existing featureFlags safely in JSON
   const mergedFlags = {
     ...existingFlags,
     ...inputFlags,
-    ...(inputData.imageFetchQuality ? { imageFetchQuality: inputData.imageFetchQuality } : {}),
+    ...(inputData.imageFetchQuality !== undefined ? { imageFetchQuality: inputData.imageFetchQuality } : {}),
+    ...(inputData.seoKeywords !== undefined ? { seoKeywords: inputData.seoKeywords } : {}),
+    ...(inputData.ogImage !== undefined ? { ogImage: inputData.ogImage } : {}),
+    ...(inputData.twitterHandle !== undefined ? { twitterHandle: inputData.twitterHandle } : {}),
+    ...(inputData.siteUrl !== undefined ? { siteUrl: inputData.siteUrl } : {}),
   };
 
   const payload: Record<string, any> = {};

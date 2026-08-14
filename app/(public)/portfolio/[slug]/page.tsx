@@ -28,12 +28,12 @@ export default async function ProjectStoryPage({ params }: ProjectStoryPageProps
   const getGradientOpacityClass = (intensity?: string) => {
     switch (intensity) {
       case 'subtle':
-        return 'from-slate-950/70 via-slate-950/30 to-transparent';
+        return 'from-black/75 via-black/35 to-transparent';
       case 'medium':
-        return 'from-slate-950/85 via-slate-950/50 to-slate-950/20';
+        return 'from-black/90 via-black/60 to-black/25';
       case 'heavy':
       default:
-        return 'from-slate-950 via-slate-950/75 to-slate-950/30';
+        return 'from-black/95 via-black/80 to-black/35';
     }
   };
 
@@ -57,7 +57,7 @@ export default async function ProjectStoryPage({ params }: ProjectStoryPageProps
         <div className="absolute top-20 sm:top-28 left-4 sm:left-12 z-30">
           <Link
             href="/portfolio"
-            className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-none bg-slate-950/80 backdrop-blur-md border border-slate-800 text-[10px] sm:text-xs uppercase tracking-[0.2em] font-mono text-slate-300 hover:text-amber-400 hover:border-amber-500/50 transition-all shadow-xl"
+            className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-none bg-black/80 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs uppercase tracking-[0.2em] font-mono text-slate-200 hover:text-amber-400 hover:border-amber-500/50 transition-all shadow-xl"
           >
             <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
             <span>Back to Portfolio</span>
@@ -68,7 +68,7 @@ export default async function ProjectStoryPage({ params }: ProjectStoryPageProps
         <div className="absolute inset-0 z-20 flex flex-col justify-end pb-8 sm:pb-16 px-4 sm:px-12 md:px-16 max-w-[1920px] mx-auto">
           <div className="max-w-4xl space-y-2.5 sm:space-y-4">
             {/* Category Tag */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-4 sm:py-1.5 rounded-none border border-amber-500/40 bg-slate-950/80 backdrop-blur-md shadow-lg">
+            <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-4 sm:py-1.5 rounded-none border border-amber-500/40 bg-black/80 backdrop-blur-md shadow-lg">
               <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400" />
               <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.25em] font-mono text-amber-300">
                 {project.category.name}
@@ -76,20 +76,20 @@ export default async function ProjectStoryPage({ params }: ProjectStoryPageProps
             </div>
 
             {/* Project Title */}
-            <h1 className="text-3xl sm:text-5xl md:text-7xl font-serif font-light text-slate-100 leading-tight drop-shadow-2xl">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-serif font-light text-white leading-tight drop-shadow-2xl">
               {project.title}
             </h1>
 
             {/* Metadata Pills */}
             <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 text-[10px] sm:text-xs text-slate-200 font-mono pt-1">
               {project.location && (
-                <span className="flex items-center gap-1.5 px-3 py-1 bg-slate-950/80 backdrop-blur-md border border-slate-800 shadow-md">
+                <span className="flex items-center gap-1.5 px-3 py-1 bg-black/80 backdrop-blur-md border border-white/20 shadow-md">
                   <MapPin className="w-3.5 h-3.5 text-amber-400" />
                   {project.location}
                 </span>
               )}
               {project.eventDate && (
-                <span className="flex items-center gap-1.5 px-3 py-1 bg-slate-950/80 backdrop-blur-md border border-slate-800 shadow-md">
+                <span className="flex items-center gap-1.5 px-3 py-1 bg-black/80 backdrop-blur-md border border-white/20 shadow-md">
                   <Calendar className="w-3.5 h-3.5 text-amber-400" />
                   {new Date(project.eventDate).toLocaleDateString('en-US', {
                     month: 'long',
@@ -97,7 +97,7 @@ export default async function ProjectStoryPage({ params }: ProjectStoryPageProps
                   })}
                 </span>
               )}
-              <span className="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-slate-950/80 backdrop-blur-md border border-amber-500/30 text-amber-400 shadow-md">
+              <span className="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-black/80 backdrop-blur-md border border-amber-500/30 text-amber-400 shadow-md">
                 <Aperture className="w-3.5 h-3.5" />
                 35MM FILM ARCHIVE
               </span>

@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Camera, LayoutDashboard, Image as ImageIcon, Calendar, Settings, LogOut, ArrowUpRight } from 'lucide-react';
 import { ToastProvider } from '@/components/ui/Toast';
+import DynamicThemeProvider from '@/components/providers/DynamicThemeProvider';
+import { getTenantSettings } from '@/services/settings.service';
 
 export default async function AdminDashboardLayout({
   children,
@@ -15,6 +17,8 @@ export default async function AdminDashboardLayout({
     redirect('/admin/login');
   }
 
+  const settings = await getTenantSettings();
+
   const navItems = [
     { name: 'Overview', href: '/admin', icon: LayoutDashboard },
     { name: 'Projects & Galleries', href: '/admin/projects', icon: ImageIcon },
@@ -23,8 +27,14 @@ export default async function AdminDashboardLayout({
   ];
 
   return (
-    <ToastProvider>
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col md:flex-row">
+    <DynamicThemeProvider
+      primaryColor={settings.primaryColor}
+      secondaryColor={settings.secondaryColor}
+      accentColor={settings.accentColor}
+      fontFamily={settings.fontFamily}
+    >
+      <ToastProvider>
+        <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col md:flex-row">
         {/* Admin Sidebar */}
         <aside className="w-full md:w-64 bg-slate-900 border-r border-slate-800 p-6 flex flex-col justify-between shrink-0">
           <div>
@@ -82,5 +92,6 @@ export default async function AdminDashboardLayout({
         <main className="flex-1 p-6 md:p-12 overflow-y-auto">{children}</main>
       </div>
     </ToastProvider>
+  </DynamicThemeProvider>
   );
 }

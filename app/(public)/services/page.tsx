@@ -76,7 +76,7 @@ export default async function ServicesPage() {
               <MagneticButton dataCursor="RESERVE">
                 <Link
                   href="/booking"
-                  className="w-full py-3.5 rounded-none bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-slate-950 font-bold text-xs uppercase tracking-[0.2em] text-center hover:brightness-110 transition-all block shadow-lg"
+                  className="w-full py-3.5 rounded-none bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-[0.2em] text-center transition-all block shadow-lg"
                 >
                   Commission Package
                 </Link>
@@ -99,7 +99,7 @@ export default async function ServicesPage() {
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <Link
               href="/booking"
-              className="w-full sm:w-auto px-8 py-3.5 rounded-none bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 shadow-lg"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-none bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 shadow-lg"
             >
               <span>Book an Appointment</span>
               <ArrowUpRight className="w-4 h-4" />

@@ -1,9 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { ThemePreset } from '@/lib/themes';
 import ThemePresetsSelector from './ThemePresetsSelector';
-import { Save, CheckCircle2, RefreshCw, Eye, Sparkles, Calendar, ArrowRight, Layout, Sliders, Zap, Gauge, ImageIcon } from 'lucide-react';
+import { Save, CheckCircle2, RefreshCw, Eye, Sparkles, Calendar, ArrowRight, Layout, Sliders, Zap, Gauge, ImageIcon, Globe, UploadCloud } from 'lucide-react';
+import { uploadToCloudinaryWithRetry } from '@/lib/cloudinaryUpload';
+import { useToast } from '@/components/ui/Toast';
 
 function InstagramIcon({ className = 'w-4 h-4' }: { className?: string }) {
   return (
@@ -31,6 +34,13 @@ interface TenantSettingsData {
   heroCtaSecondaryText?: string;
   cardHoverGlow?: boolean;
   imageFetchQuality?: string;
+  favicon?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  seoKeywords?: string;
+  ogImage?: string;
+  twitterHandle?: string;
+  siteUrl?: string;
   primaryColor: string;
   secondaryColor: string;
   accentColor: string;
@@ -51,10 +61,13 @@ const DEFAULT_INSTAGRAM_POSTS = [
   'https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=400&auto=format&fit=crop',
 ];
 
-import { useRouter } from 'next/navigation';
+import { applyDynamicThemeToDocument } from '@/lib/theme-utils';
 
 export default function AdminSettingsForm({ initialSettings }: AdminSettingsFormProps) {
   const router = useRouter();
+  const { showToast } = useToast();
+  const [uploadingFavicon, setUploadingFavicon] = useState(false);
+  const [uploadingOgImage, setUploadingOgImage] = useState(false);
   const [formData, setFormData] = useState<TenantSettingsData>({
     heroContentPosition: 'bottom-left',
     heroGradientIntensity: 'heavy',
@@ -64,6 +77,44 @@ export default function AdminSettingsForm({ initialSettings }: AdminSettingsForm
     imageFetchQuality: 'balanced',
     ...initialSettings,
   });
+
+  const handleFaviconFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingFavicon(true);
+    try {
+      showToast('Uploading favicon icon to Cloudinary...', 'info');
+      const url = await uploadToCloudinaryWithRetry(file, (msg, type) => {
+        showToast(msg, type);
+      });
+      setFormData((prev) => ({ ...prev, favicon: url }));
+      showToast('Favicon icon uploaded successfully!', 'success');
+    } catch (err: any) {
+      showToast(err.message || 'Favicon upload failed.', 'error');
+    } finally {
+      setUploadingFavicon(false);
+    }
+  };
+
+  const handleOgImageFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingOgImage(true);
+    try {
+      showToast('Uploading social banner image to Cloudinary...', 'info');
+      const url = await uploadToCloudinaryWithRetry(file, (msg, type) => {
+        showToast(msg, type);
+      });
+      setFormData((prev) => ({ ...prev, ogImage: url }));
+      showToast('Social banner image uploaded successfully!', 'success');
+    } catch (err: any) {
+      showToast(err.message || 'Social banner upload failed.', 'error');
+    } finally {
+      setUploadingOgImage(false);
+    }
+  };
 
   const rawInstagramPosts = initialSettings.featureFlags?.instagramPosts;
   const [instagramPosts, setInstagramPosts] = useState<string[]>(
@@ -75,14 +126,29 @@ export default function AdminSettingsForm({ initialSettings }: AdminSettingsForm
   const [saving, setSaving] = useState(false);
   const [successMsg, setSuccessMsg] = useState(false);
 
-  // Sync root CSS variables on mount and change
+  // Sync root CSS variables & browser favicon on mount and change
   useEffect(() => {
-    const root = document.documentElement;
-    if (formData.primaryColor) root.style.setProperty('--primary-color', formData.primaryColor);
-    if (formData.secondaryColor) root.style.setProperty('--secondary-color', formData.secondaryColor);
-    if (formData.accentColor) root.style.setProperty('--accent-color', formData.accentColor);
-    if (formData.fontFamily) root.style.setProperty('--font-family', formData.fontFamily);
-  }, [formData.primaryColor, formData.secondaryColor, formData.accentColor, formData.fontFamily]);
+    applyDynamicThemeToDocument(
+      formData.primaryColor,
+      formData.secondaryColor,
+      formData.accentColor,
+      formData.fontFamily
+    );
+
+    if (formData.favicon && typeof window !== 'undefined') {
+      const links = document.querySelectorAll<HTMLLinkElement>("link[rel*='icon']");
+      if (links.length > 0) {
+        links.forEach((link) => {
+          link.href = formData.favicon!;
+        });
+      } else {
+        const link = document.createElement('link');
+        link.rel = 'icon';
+        link.href = formData.favicon;
+        document.head.appendChild(link);
+      }
+    }
+  }, [formData.primaryColor, formData.secondaryColor, formData.accentColor, formData.fontFamily, formData.favicon]);
 
   const handleApplyTheme = (preset: ThemePreset) => {
     setFormData((prev) => ({
@@ -92,11 +158,12 @@ export default function AdminSettingsForm({ initialSettings }: AdminSettingsForm
       accentColor: preset.accentColor,
       fontFamily: preset.fontFamily,
     }));
-    const root = document.documentElement;
-    root.style.setProperty('--primary-color', preset.primaryColor);
-    root.style.setProperty('--secondary-color', preset.secondaryColor);
-    root.style.setProperty('--accent-color', preset.accentColor);
-    root.style.setProperty('--font-family', preset.fontFamily);
+    applyDynamicThemeToDocument(
+      preset.primaryColor,
+      preset.secondaryColor,
+      preset.accentColor,
+      preset.fontFamily
+    );
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -105,11 +172,12 @@ export default function AdminSettingsForm({ initialSettings }: AdminSettingsForm
 
     setFormData((prev) => {
       const updated = { ...prev, [name]: val };
-      const root = document.documentElement;
-      if (name === 'primaryColor') root.style.setProperty('--primary-color', value);
-      if (name === 'secondaryColor') root.style.setProperty('--secondary-color', value);
-      if (name === 'accentColor') root.style.setProperty('--accent-color', value);
-      if (name === 'fontFamily') root.style.setProperty('--font-family', value);
+      applyDynamicThemeToDocument(
+        updated.primaryColor,
+        updated.secondaryColor,
+        updated.accentColor,
+        updated.fontFamily
+      );
       return updated;
     });
   };
@@ -136,11 +204,19 @@ export default function AdminSettingsForm({ initialSettings }: AdminSettingsForm
 
       if (res.ok) {
         setSuccessMsg(true);
+        if (formData.favicon && typeof window !== 'undefined') {
+          const links = document.querySelectorAll<HTMLLinkElement>("link[rel*='icon']");
+          links.forEach((link) => {
+            link.href = formData.favicon!;
+          });
+        }
+        showToast('Studio theme & favicon settings saved successfully!', 'success');
         router.refresh();
         setTimeout(() => setSuccessMsg(false), 5000);
       }
     } catch (err) {
       console.error(err);
+      showToast('Failed to save studio settings.', 'error');
     } finally {
       setSaving(false);
     }
@@ -186,20 +262,23 @@ export default function AdminSettingsForm({ initialSettings }: AdminSettingsForm
 
         {/* Mock Public Hero Card Styled Dynamically in Real-Time */}
         <div
-          className="relative p-6 sm:p-10 rounded-none overflow-hidden border transition-all duration-500 group"
+          className="relative p-6 sm:p-10 rounded-none overflow-hidden border transition-all duration-500 group bg-slate-950"
           style={{
             backgroundColor: formData.secondaryColor,
             borderColor: `${formData.primaryColor}40`,
             boxShadow: formData.cardHoverGlow ? `0 0 40px ${formData.primaryColor}30` : undefined,
           }}
         >
+          {/* Always Dark Overlay for Hero Preview legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/40 z-0 pointer-events-none" />
+
           <div className={`relative z-10 space-y-4 max-w-xl flex flex-col ${getPreviewAlignment()}`}>
             {/* Badge */}
             <div
               className="inline-flex items-center gap-2 px-3 py-1 rounded-none border backdrop-blur-md"
               style={{
                 borderColor: `${formData.primaryColor}60`,
-                backgroundColor: `${formData.secondaryColor}aa`,
+                backgroundColor: 'rgba(0,0,0,0.7)',
                 color: formData.primaryColor,
               }}
             >
@@ -244,7 +323,7 @@ export default function AdminSettingsForm({ initialSettings }: AdminSettingsForm
                 className="px-5 py-2.5 rounded-none border text-[10px] uppercase tracking-widest flex items-center gap-2"
                 style={{
                   borderColor: `${formData.accentColor}60`,
-                  backgroundColor: `${formData.secondaryColor}99`,
+                  backgroundColor: 'rgba(0,0,0,0.6)',
                   color: formData.accentColor,
                 }}
               >
@@ -407,6 +486,190 @@ export default function AdminSettingsForm({ initialSettings }: AdminSettingsForm
               Automatically optimizes image fetch payloads across all portfolio galleries for 3x faster rendering on mobile and desktop.
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Favicon & Complete SEO Metadata Suite */}
+      <div className="bg-slate-900/80 border border-slate-800 rounded-none p-8 space-y-6">
+        <div className="flex items-center gap-3 border-b border-slate-800 pb-4">
+          <div className="w-8 h-8 rounded-none bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+            <Globe className="w-4 h-4" />
+          </div>
+          <div>
+            <h3 className="text-lg font-serif text-slate-100">Favicon & Full SEO Metadata Suite</h3>
+            <p className="text-xs text-slate-400 font-mono">
+              Configure browser tab favicon icon, meta titles, social share preview cards, search keywords, and Twitter handles
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {/* Favicon URL & Direct File Upload */}
+          <div>
+            <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2 flex items-center justify-between">
+              <span>Favicon Icon URL / Upload</span>
+              {uploadingFavicon && (
+                <span className="text-[10px] text-amber-400 animate-pulse font-mono">Uploading Cloudinary...</span>
+              )}
+            </label>
+            <div className="flex items-center gap-3">
+              {formData.favicon ? (
+                /* eslint-disable-next-app-element */
+                <img
+                  src={formData.favicon}
+                  alt="Favicon Preview"
+                  className="w-10 h-10 rounded-none border border-amber-500/50 object-cover shrink-0 bg-slate-950 p-1"
+                />
+              ) : (
+                <div className="w-10 h-10 rounded-none border border-slate-800 bg-slate-950 flex items-center justify-center text-slate-500 text-[10px] font-mono shrink-0">
+                  ICO
+                </div>
+              )}
+              <input
+                type="text"
+                name="favicon"
+                value={formData.favicon || ''}
+                onChange={handleChange}
+                placeholder="https://... or custom favicon image URL"
+                className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono focus:border-amber-400 transition-colors"
+              />
+              <label className="px-4 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase font-mono tracking-widest cursor-pointer flex items-center justify-center shrink-0 border border-amber-400 transition-colors">
+                {uploadingFavicon ? (
+                  <RefreshCw className="w-4 h-4 animate-spin" />
+                ) : (
+                  <UploadCloud className="w-4 h-4" />
+                )}
+                <input
+                  type="file"
+                  accept="image/*,.ico"
+                  className="hidden"
+                  onChange={handleFaviconFileUpload}
+                />
+              </label>
+            </div>
+          </div>
+
+          {/* Meta Title */}
+          <div>
+            <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2">
+              SEO Meta Title Tag
+            </label>
+            <input
+              type="text"
+              name="seoTitle"
+              value={formData.seoTitle || ''}
+              onChange={handleChange}
+              placeholder="Lumina Studios | Luxury Destination Wedding & Fine Art Photography"
+              className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono"
+            />
+          </div>
+        </div>
+
+        {/* Meta Description */}
+        <div>
+          <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2">
+            SEO Meta Description Tag
+          </label>
+          <textarea
+            name="seoDescription"
+            rows={3}
+            value={formData.seoDescription || ''}
+            onChange={handleChange}
+            placeholder="Award-winning cinematic photography studio specializing in luxury weddings, fashion campaigns, and editorial portraiture..."
+            className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono leading-relaxed"
+          />
+        </div>
+
+        {/* Keywords */}
+        <div>
+          <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2">
+            SEO Keywords (Comma Separated)
+          </label>
+          <input
+            type="text"
+            name="seoKeywords"
+            value={formData.seoKeywords || ''}
+            onChange={handleChange}
+            placeholder="photography, luxury wedding, fashion photographer, editorial photography, destination wedding, fine art portraits"
+            className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2 border-t border-slate-800/80">
+          {/* Social Share OG Image */}
+          <div className="sm:col-span-2">
+            <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2 flex items-center justify-between">
+              <span>Social Share Banner Image URL (OpenGraph)</span>
+              {uploadingOgImage && (
+                <span className="text-[10px] text-amber-400 animate-pulse font-mono">Uploading Cloudinary...</span>
+              )}
+            </label>
+            <div className="flex items-center gap-3">
+              {formData.ogImage ? (
+                /* eslint-disable-next-app-element */
+                <img
+                  src={formData.ogImage}
+                  alt="OG Preview"
+                  className="w-16 h-10 rounded-none border border-amber-500/50 object-cover shrink-0 bg-slate-950"
+                />
+              ) : (
+                <div className="w-16 h-10 rounded-none border border-slate-800 bg-slate-950 flex items-center justify-center text-slate-500 text-[10px] font-mono shrink-0">
+                  OG
+                </div>
+              )}
+              <input
+                type="text"
+                name="ogImage"
+                value={formData.ogImage || ''}
+                onChange={handleChange}
+                placeholder="https://images.unsplash.com/... for WhatsApp/Facebook social previews"
+                className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono focus:border-amber-400 transition-colors"
+              />
+              <label className="px-4 py-3 bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold text-xs uppercase font-mono tracking-widest cursor-pointer flex items-center justify-center shrink-0 border border-slate-700 transition-colors">
+                {uploadingOgImage ? (
+                  <RefreshCw className="w-4 h-4 animate-spin text-amber-400" />
+                ) : (
+                  <UploadCloud className="w-4 h-4" />
+                )}
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleOgImageFileUpload}
+                />
+              </label>
+            </div>
+          </div>
+
+          {/* Twitter Handle */}
+          <div>
+            <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2">
+              Twitter Creator Handle
+            </label>
+            <input
+              type="text"
+              name="twitterHandle"
+              value={formData.twitterHandle || ''}
+              onChange={handleChange}
+              placeholder="@luminastudios"
+              className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono"
+            />
+          </div>
+        </div>
+
+        {/* Site Domain / Canonical */}
+        <div>
+          <label className="block text-xs uppercase tracking-widest text-slate-400 font-mono mb-2">
+            Canonical Website Domain URL
+          </label>
+          <input
+            type="text"
+            name="siteUrl"
+            value={formData.siteUrl || ''}
+            onChange={handleChange}
+            placeholder="https://luminastudios.com"
+            className="w-full px-4 py-3 rounded-none bg-slate-950 border border-slate-800 text-slate-100 text-xs font-mono"
+          />
         </div>
       </div>
 

@@ -84,21 +84,21 @@ export default function HeroSection({
     }
   };
 
-  // Gradient dark overlay intensity calculator
+  // Gradient dark overlay intensity calculator (ALWAYS black dark gradient for photo legibility)
   const getGradientOpacity = () => {
     switch (gradientIntensity) {
       case 'subtle':
-        return 'from-slate-950/70 via-slate-950/30 to-transparent';
+        return 'from-black/75 via-black/35 to-transparent';
       case 'medium':
-        return 'from-slate-950/85 via-slate-950/50 to-slate-950/20';
+        return 'from-black/90 via-black/60 to-black/25';
       case 'heavy':
       default:
-        return 'from-slate-950 via-slate-950/75 to-slate-950/30';
+        return 'from-black/95 via-black/80 to-black/35';
     }
   };
 
   return (
-    <section className={`relative w-full h-[85vh] min-h-[500px] sm:min-h-[700px] flex overflow-hidden bg-slate-950 ${getSectionAlignment()}`}>
+    <section className={`relative w-full h-[85vh] min-h-[500px] sm:min-h-[700px] flex overflow-hidden bg-black ${getSectionAlignment()}`}>
       {/* 3D Particle Ambient Canvas */}
       <Hero3DCanvas />
 
@@ -141,13 +141,13 @@ export default function HeroSection({
       <div className="absolute top-24 sm:top-28 right-4 md:right-12 z-20 hidden sm:flex flex-col items-end gap-1 font-mono text-[10px] uppercase tracking-[0.25em] text-amber-400/80">
         <span>[SYS.LOC] 40.7128° N, 74.0060° W</span>
         <span>0{(currentIdx % activeImages.length) + 1} // 0{activeImages.length} FRAME_INDEX</span>
-        <span className="text-slate-500">ISO 100 • 35MM F/1.4</span>
+        <span className="text-slate-400">ISO 100 • 35MM F/1.4</span>
       </div>
 
       {/* Configurable Hero Content Container */}
-      <div className={`relative z-20 w-full max-w-[1920px] px-4 sm:px-12 md:px-16 text-slate-100 flex flex-col max-w-2xl ${getContentChildAlignment()}`}>
+      <div className={`relative z-20 w-full max-w-[1920px] px-4 sm:px-12 md:px-16 text-white flex flex-col max-w-2xl pt-20 sm:pt-28 ${getContentChildAlignment()}`}>
         {/* Matrix Luxury Badge */}
-        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-none border border-amber-500/40 bg-slate-950/80 backdrop-blur-md mb-3 sm:mb-4">
+        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-none border border-amber-500/40 bg-black/80 backdrop-blur-md mb-3 sm:mb-4">
           <Sparkles className="w-3 h-3 text-amber-400 shrink-0" />
           <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.2em] sm:tracking-[0.25em] font-mono text-amber-400">
             01 // Timeless Portraits For Everlasting Memories
@@ -156,14 +156,14 @@ export default function HeroSection({
 
         {/* Hero Title */}
         <TextReveal className="mb-2 sm:mb-3">
-          <h1 className="text-base sm:text-xl md:text-2xl lg:text-3xl font-serif font-light tracking-[0.1em] sm:tracking-[0.12em] leading-tight sm:leading-snug text-slate-100 uppercase drop-shadow-2xl">
+          <h1 className="text-base sm:text-xl md:text-2xl lg:text-3xl font-serif font-light tracking-[0.1em] sm:tracking-[0.12em] leading-tight sm:leading-snug text-white uppercase drop-shadow-2xl">
             {title}
           </h1>
         </TextReveal>
 
         {/* Hero Subtitle */}
         <TextReveal delay={0.2} className="mb-5 sm:mb-6 max-w-lg">
-          <p className="text-[11px] sm:text-xs md:text-sm text-slate-300 font-light leading-relaxed">
+          <p className="text-[11px] sm:text-xs md:text-sm text-slate-200 font-light leading-relaxed">
             {subtitle}
           </p>
         </TextReveal>
@@ -182,7 +182,7 @@ export default function HeroSection({
           <MagneticButton dataCursor="BOOKING" className="w-full sm:w-auto">
             <Link
               href="/booking"
-              className="w-full sm:w-auto px-5 py-3 rounded-none border border-slate-300/40 bg-slate-950/60 backdrop-blur-md hover:border-amber-400 text-slate-100 font-medium text-[10px] sm:text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 block"
+              className="w-full sm:w-auto px-5 py-3 rounded-none border border-white/30 bg-black/60 backdrop-blur-md hover:border-amber-400 text-white font-medium text-[10px] sm:text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 block"
             >
               <Calendar className="w-3.5 h-3.5 text-amber-400" />
               <span>{ctaSecondaryText}</span>

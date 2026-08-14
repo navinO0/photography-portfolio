@@ -38,23 +38,31 @@ export default function Navbar({
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full z-40 transition-[background-color,padding,box-shadow,backdrop-filter] duration-500 ease-in-out ${
+        className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ease-in-out border-none ${
           scrolled
-            ? 'bg-slate-950/85 backdrop-blur-md py-2.5 sm:py-4 shadow-2xl shadow-black/50'
-            : 'bg-gradient-to-b from-slate-950/90 via-slate-950/40 to-transparent py-3 sm:py-6'
+            ? 'bg-slate-950/95 backdrop-blur-md py-2.5 sm:py-3 shadow-xl'
+            : 'bg-gradient-to-b from-black/90 via-black/40 to-transparent py-4 sm:py-6'
         }`}
       >
         <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 flex items-center justify-between">
           {/* Brand Logo */}
           <Link href="/" className="group flex items-center gap-3" data-cursor="LUMINA">
-            <div className="w-10 h-10 rounded-none border border-amber-500/40 flex items-center justify-center bg-slate-900/60 group-hover:border-amber-400 group-hover:scale-105 transition-all">
+            <div
+              className={`w-10 h-10 rounded-none border border-amber-500/50 flex items-center justify-center transition-all ${
+                scrolled ? 'bg-slate-900/60' : 'bg-black/60'
+              } group-hover:border-amber-400 group-hover:scale-105`}
+            >
               <Camera className="w-5 h-5 text-amber-400" />
             </div>
             <div>
-              <span className="text-xl font-serif tracking-widest text-slate-100 group-hover:text-amber-300 transition-colors uppercase block">
+              <span
+                className={`text-xl font-serif tracking-widest transition-colors uppercase block ${
+                  scrolled ? 'text-slate-100 hover:text-amber-400' : 'text-white hover:text-amber-300 drop-shadow'
+                }`}
+              >
                 {photographerName}
               </span>
-              <span className="text-[9px] uppercase tracking-[0.25em] text-amber-500/80 font-mono block">
+              <span className="text-[9px] uppercase tracking-[0.25em] text-amber-400 font-mono block">
                 Fine Art Photography
               </span>
             </div>
@@ -69,7 +77,11 @@ export default function Navbar({
                   key={link.href}
                   href={link.href}
                   className={`relative text-xs uppercase tracking-[0.2em] transition-colors py-1 ${
-                    isActive ? 'text-amber-400 font-medium' : 'text-slate-300 hover:text-amber-200'
+                    isActive
+                      ? 'text-amber-400 font-bold'
+                      : scrolled
+                      ? 'text-slate-300 hover:text-amber-400'
+                      : 'text-white/90 hover:text-amber-300'
                   }`}
                   data-cursor={link.name}
                 >
@@ -88,7 +100,9 @@ export default function Navbar({
               href={`https://wa.me/${whatsappNumber}?text=Hello!%20I%20would%20like%20to%20inquire%20about%20a%20photography%20session.`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs uppercase tracking-widest text-slate-300 hover:text-amber-400 flex items-center gap-2 transition-colors px-3 py-2"
+              className={`text-xs uppercase tracking-widest flex items-center gap-2 transition-colors px-3 py-2 font-mono ${
+                scrolled ? 'text-slate-300 hover:text-amber-400' : 'text-white/90 hover:text-amber-300'
+              }`}
             >
               <Phone className="w-3.5 h-3.5 text-amber-400" />
               <span>WhatsApp</span>
@@ -97,10 +111,10 @@ export default function Navbar({
             <MagneticButton dataCursor="BOOK NOW">
               <Link
                 href="/booking"
-                className="relative group px-6 py-2.5 rounded-none border border-amber-500/40 bg-gradient-to-r from-amber-500/20 to-amber-700/20 hover:border-amber-400 overflow-hidden flex items-center gap-2 transition-all shadow-lg shadow-amber-900/20"
+                className="relative group px-5 py-2.5 rounded-none border border-amber-400 bg-amber-500 hover:bg-amber-400 overflow-hidden flex items-center gap-2 transition-all shadow-md"
               >
-                <Calendar className="w-3.5 h-3.5 text-amber-400 group-hover:rotate-12 transition-transform" />
-                <span className="text-xs uppercase tracking-widest text-amber-100 font-medium">
+                <Calendar className="w-3.5 h-3.5 text-black group-hover:rotate-12 transition-transform shrink-0" />
+                <span className="text-xs uppercase tracking-widest text-black font-bold font-mono">
                   Book Session
                 </span>
               </Link>
@@ -110,7 +124,7 @@ export default function Navbar({
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-slate-200 hover:text-amber-400 p-2"
+            className={`md:hidden p-2 ${scrolled ? 'text-slate-100' : 'text-white'} hover:text-amber-400`}
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
