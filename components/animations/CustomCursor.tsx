@@ -12,7 +12,7 @@ export default function CustomCursor() {
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
-  const springConfig = { damping: 25, stiffness: 250, mass: 0.5 };
+  const springConfig = { damping: 28, stiffness: 300, mass: 0.4 };
   const cursorX = useSpring(mouseX, springConfig);
   const cursorY = useSpring(mouseY, springConfig);
 
@@ -28,7 +28,7 @@ export default function CustomCursor() {
     };
 
     checkMobile();
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener('resize', checkMobile, { passive: true });
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
@@ -37,23 +37,26 @@ export default function CustomCursor() {
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
+      if (!target) return;
+      
       const interactiveEl = target.closest('[data-cursor], a, button, input, select');
 
       if (interactiveEl) {
+        const cursorData = interactiveEl.getAttribute('data-cursor') || '';
+        const imgData = interactiveEl.getAttribute('data-cursor-img') || null;
+
         setIsHovered(true);
-        const cursorData = interactiveEl.getAttribute('data-cursor');
-        const imgData = interactiveEl.getAttribute('data-cursor-img');
-        if (cursorData) setCursorText(cursorData);
-        if (imgData) setPreviewImage(imgData);
+        setCursorText((prev) => (prev !== cursorData ? cursorData : prev));
+        setPreviewImage((prev) => (prev !== imgData ? imgData : prev));
       } else {
-        setIsHovered(false);
-        setCursorText('');
-        setPreviewImage(null);
+        setIsHovered((prev) => (prev ? false : prev));
+        setCursorText((prev) => (prev ? '' : prev));
+        setPreviewImage((prev) => (prev ? null : prev));
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseover', handleMouseOver);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    document.addEventListener('mouseover', handleMouseOver, { passive: true });
 
     return () => {
       window.removeEventListener('resize', checkMobile);
@@ -68,7 +71,7 @@ export default function CustomCursor() {
     <div className="hidden lg:block">
       {/* Outer Glow Ring / Image Preview */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-50 rounded-full flex items-center justify-center overflow-hidden transition-colors duration-300"
+        className="fixed top-0 left-0 pointer-events-none z-50 rounded-full flex items-center justify-center overflow-hidden transition-colors duration-200"
         style={{
           x: cursorX,
           y: cursorY,
@@ -77,9 +80,8 @@ export default function CustomCursor() {
           width: previewImage ? 160 : isHovered ? 64 : 16,
           height: previewImage ? 200 : isHovered ? 64 : 16,
           borderRadius: previewImage ? '12px' : '9999px',
-          backgroundColor: previewImage ? 'transparent' : isHovered ? 'rgba(217, 119, 6, 0.25)' : 'rgba(255, 255, 255, 0.75)',
-          border: previewImage ? '2px solid rgba(245, 158, 11, 0.8)' : isHovered ? '1px solid rgba(245, 158, 11, 0.8)' : 'none',
-          backdropFilter: isHovered && !previewImage ? 'blur(4px)' : 'none',
+          backgroundColor: previewImage ? 'transparent' : isHovered ? 'rgba(217, 119, 6, 0.35)' : 'rgba(255, 255, 255, 0.8)',
+          border: previewImage ? '2px solid rgba(245, 158, 11, 0.9)' : isHovered ? '1px solid rgba(245, 158, 11, 0.8)' : 'none',
           boxShadow: previewImage ? '0 20px 40px rgba(0,0,0,0.6)' : isHovered ? '0 0 20px rgba(245,158,11,0.4)' : 'none',
         }}
       >
@@ -100,3 +102,4 @@ export default function CustomCursor() {
     </div>
   );
 }
+

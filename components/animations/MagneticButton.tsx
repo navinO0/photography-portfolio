@@ -23,13 +23,13 @@ export default function MagneticButton({
     if (!ref.current || window.innerWidth < 1024 || window.matchMedia('(pointer: coarse)').matches) return;
     const { clientX, clientY } = e;
     const { left, top, width, height } = ref.current.getBoundingClientRect();
-    const x = (clientX - (left + width / 2)) * 0.35;
-    const y = (clientY - (top + height / 2)) * 0.35;
-    setPosition({ x, y });
+    const x = Math.round((clientX - (left + width / 2)) * 0.35);
+    const y = Math.round((clientY - (top + height / 2)) * 0.35);
+    setPosition((prev) => (prev.x === x && prev.y === y ? prev : { x, y }));
   };
 
   const handleMouseLeave = () => {
-    setPosition({ x: 0, y: 0 });
+    setPosition((prev) => (prev.x === 0 && prev.y === 0 ? prev : { x: 0, y: 0 }));
   };
 
   return (

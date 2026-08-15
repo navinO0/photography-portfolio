@@ -21,18 +21,17 @@ export default function TextReveal({ children, className = '', delay = 0 }: Text
 
       gsap.fromTo(
         el,
-        { opacity: 0, y: 40, clipPath: 'inset(100% 0% 0% 0%)' },
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
-          clipPath: 'inset(0% 0% 0% 0%)',
-          duration: 1.2,
+          duration: 0.9,
           delay,
-          ease: 'power3.out',
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: el,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
+            start: 'top 90%',
+            once: true,
           },
         }
       );
@@ -42,7 +41,7 @@ export default function TextReveal({ children, className = '', delay = 0 }: Text
   }, [delay]);
 
   return (
-    <div ref={containerRef} className={`will-change-transform ${className}`}>
+    <div ref={containerRef} className={className}>
       {children}
     </div>
   );

@@ -13,26 +13,31 @@ export function getOptimizedImageUrl(
 
   // Handle Unsplash Images
   if (url.includes('images.unsplash.com')) {
-    const urlObj = new URL(url);
-    switch (mode) {
-      case 'ultra-fast':
-        urlObj.searchParams.set('auto', 'format,compress');
-        urlObj.searchParams.set('q', '75');
-        urlObj.searchParams.set('fit', 'crop');
-        break;
-      case 'max-quality':
-        urlObj.searchParams.set('auto', 'format');
-        urlObj.searchParams.set('q', '98');
-        urlObj.searchParams.set('fit', 'crop');
-        break;
-      case 'balanced':
-      default:
-        urlObj.searchParams.set('auto', 'format,compress');
-        urlObj.searchParams.set('q', '88');
-        urlObj.searchParams.set('fit', 'crop');
-        break;
+    try {
+      const urlObj = new URL(url);
+      urlObj.searchParams.set('fm', 'webp');
+      switch (mode) {
+        case 'ultra-fast':
+          urlObj.searchParams.set('auto', 'format,compress');
+          urlObj.searchParams.set('q', '70');
+          urlObj.searchParams.set('fit', 'crop');
+          break;
+        case 'max-quality':
+          urlObj.searchParams.set('auto', 'format,compress');
+          urlObj.searchParams.set('q', '90');
+          urlObj.searchParams.set('fit', 'crop');
+          break;
+        case 'balanced':
+        default:
+          urlObj.searchParams.set('auto', 'format,compress');
+          urlObj.searchParams.set('q', '80');
+          urlObj.searchParams.set('fit', 'crop');
+          break;
+      }
+      return urlObj.toString();
+    } catch {
+      return url;
     }
-    return urlObj.toString();
   }
 
   // Handle Cloudinary Images
@@ -40,7 +45,7 @@ export function getOptimizedImageUrl(
     if (mode === 'ultra-fast') {
       return url.replace('/upload/', '/upload/f_auto,q_auto:eco/');
     } else if (mode === 'max-quality') {
-      return url.replace('/upload/', '/upload/f_auto,q_auto:best/');
+      return url.replace('/upload/', '/upload/f_auto,q_auto:good/');
     } else {
       return url.replace('/upload/', '/upload/f_auto,q_auto:good/');
     }
@@ -49,3 +54,4 @@ export function getOptimizedImageUrl(
   // Fallback default
   return url;
 }
+

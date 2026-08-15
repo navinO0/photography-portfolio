@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Grid, Box, Camera, Sparkles } from 'lucide-react';
 import ParallaxImage from '../animations/ParallaxImage';
@@ -32,6 +32,16 @@ interface PortfolioGridProps {
 export default function PortfolioGrid({ categories, projects }: PortfolioGridProps) {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'2d' | '3d'>('2d');
+
+  useEffect(() => {
+    if (!projects || projects.length === 0) return;
+    projects.forEach((proj) => {
+      if (proj.coverImage) {
+        const img = new Image();
+        img.src = getOptimizedImageUrl(proj.coverImage, 'balanced');
+      }
+    });
+  }, [projects]);
 
   const filteredProjects =
     activeCategory === 'all'
@@ -141,32 +151,32 @@ export default function PortfolioGrid({ categories, projects }: PortfolioGridPro
                   <ParallaxImage
                     src={getOptimizedImageUrl(proj.coverImage, 'balanced')}
                     alt={proj.title}
-                    className="w-full h-full group-hover:scale-108 transition-transform duration-1000 ease-out"
+                    className="w-full h-full"
                   />
 
                   {/* Corner Accents */}
-                  <div className="absolute top-4 left-4 w-5 h-5 border-l border-t border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-all duration-500 group-hover:scale-110" />
-                  <div className="absolute top-4 right-4 w-5 h-5 border-r border-t border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-all duration-500 group-hover:scale-110" />
-                  <div className="absolute bottom-4 left-4 w-5 h-5 border-l border-b border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-all duration-500 group-hover:scale-110" />
-                  <div className="absolute bottom-4 right-4 w-5 h-5 border-r border-b border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-all duration-500 group-hover:scale-110" />
+                  <div className="absolute top-4 left-4 w-5 h-5 border-l border-t border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute top-4 right-4 w-5 h-5 border-r border-t border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-4 left-4 w-5 h-5 border-l border-b border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-4 right-4 w-5 h-5 border-r border-b border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
 
                   {/* Gradient Dark Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-300" />
 
                   {/* Top-Left Category Badge */}
                   <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20">
-                    <span className="px-3 py-1.5 rounded-none bg-slate-950/80 backdrop-blur-md text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-amber-300 border border-amber-500/30 font-mono font-medium shadow-lg inline-block">
+                    <span className="px-3 py-1.5 rounded-none bg-slate-950/90 text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-amber-300 border border-amber-500/30 font-mono font-medium shadow-lg inline-block">
                       {proj.category.name}
                     </span>
                   </div>
 
                   {/* Top-Right Action Arrow & Frame Badge */}
                   <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 flex items-center gap-2">
-                    <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-none bg-slate-950/80 backdrop-blur-md border border-amber-500/30 text-[9px] uppercase font-mono text-amber-400">
+                    <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-none bg-slate-950/90 border border-amber-500/30 text-[9px] uppercase font-mono text-amber-400">
                       <Camera className="w-3 h-3" />
                       <span>FRAME 0{idx + 1}</span>
                     </span>
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-none bg-slate-950/80 backdrop-blur-md border border-amber-500/40 flex items-center justify-center text-amber-400 group-hover:bg-amber-500 group-hover:text-slate-950 transition-all">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-none bg-slate-950/90 border border-amber-500/40 flex items-center justify-center text-amber-400 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
                       <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
                   </div>

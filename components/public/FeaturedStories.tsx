@@ -154,34 +154,35 @@ export default function FeaturedStories({ projects }: FeaturedStoriesProps) {
                   <img
                     src={getOptimizedImageUrl(proj.coverImage, 'balanced')}
                     alt={proj.title}
-                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-1000 ease-out"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    loading="eager"
                   />
 
                   {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-300" />
 
                   {/* Top Category Badge */}
                   <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20">
-                    <span className="px-3 py-1.5 rounded-none bg-slate-950/80 backdrop-blur-md text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-amber-300 border border-amber-500/30 font-mono font-medium shadow-lg inline-block">
+                    <span className="px-3 py-1.5 rounded-none bg-slate-950/90 text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-amber-300 border border-amber-500/30 font-mono font-medium shadow-lg inline-block">
                       {proj.category.name}
                     </span>
                   </div>
 
                   {/* Geometric Corner Accent */}
-                  <div className="absolute top-4 right-4 w-5 h-5 border-r border-t border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-opacity" />
-                  <div className="absolute bottom-4 left-4 w-5 h-5 border-l border-b border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute top-4 right-4 w-5 h-5 border-r border-t border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-4 left-4 w-5 h-5 border-l border-b border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
 
                   {/* Card Bottom Content */}
-                  <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 z-20 transform group-hover:-translate-y-1 transition-transform duration-500">
+                  <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 z-20">
                     <div className="flex items-center gap-3 text-[10px] sm:text-xs text-slate-300 font-mono mb-2">
                       {proj.location && (
-                        <span className="flex items-center gap-1 bg-black/40 backdrop-blur-sm px-2 py-0.5 border border-slate-800/80">
+                        <span className="flex items-center gap-1 bg-slate-950/90 px-2 py-0.5 border border-slate-800/80">
                           <MapPin className="w-3 h-3 text-amber-400 shrink-0" />
                           <span className="truncate max-w-[140px]">{proj.location}</span>
                         </span>
                       )}
                       {proj.eventDate && (
-                        <span className="flex items-center gap-1 bg-black/40 backdrop-blur-sm px-2 py-0.5 border border-slate-800/80">
+                        <span className="flex items-center gap-1 bg-slate-950/90 px-2 py-0.5 border border-slate-800/80">
                           <Calendar className="w-3 h-3 text-amber-400 shrink-0" />
                           {new Date(proj.eventDate).getFullYear()}
                         </span>
@@ -220,7 +221,7 @@ export default function FeaturedStories({ projects }: FeaturedStoriesProps) {
                   src={proj.coverImage}
                   alt={proj.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                  loading="lazy"
+                  loading="eager"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-85 group-hover:opacity-95 transition-opacity" />
 

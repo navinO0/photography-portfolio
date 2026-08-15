@@ -186,6 +186,7 @@ export default async function ProjectStoryPage({ params }: ProjectStoryPageProps
                     src={rel.coverImage}
                     alt={rel.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="eager"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-85 group-hover:opacity-95 transition-opacity" />
                   <div className="absolute bottom-1.5 left-1.5 right-1.5 sm:bottom-6 sm:left-6 sm:right-6">

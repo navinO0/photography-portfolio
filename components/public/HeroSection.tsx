@@ -128,6 +128,7 @@ export default function HeroSection({
               src={img}
               alt="Hero Visual"
               className="w-full h-full object-cover animate-ken-burns scale-110"
+              loading="eager"
             />
           </div>
         ))
@@ -174,7 +175,7 @@ export default function HeroSection({
           <MagneticButton dataCursor="BOOKING" className="w-full sm:w-auto">
             <Link
               href="/booking"
-              className="w-full sm:w-auto px-5 py-3 rounded-none border border-white/30 bg-black/60 backdrop-blur-md hover:border-amber-400 text-white font-medium text-[10px] sm:text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 block"
+              className="w-full sm:w-auto px-5 py-3 rounded-none border border-white/30 bg-black/80 hover:border-amber-400 text-white font-medium text-[10px] sm:text-[11px] uppercase tracking-[0.2em] transition-colors flex items-center justify-center gap-2 block"
             >
               <Calendar className="w-3.5 h-3.5 text-amber-400" />
               <span>{ctaSecondaryText}</span>

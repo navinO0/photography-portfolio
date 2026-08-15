@@ -22,6 +22,12 @@ export default function ParallaxImage({
   const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
+    if (!src) return;
+    const preloader = new Image();
+    preloader.src = src;
+  }, [src]);
+
+  useEffect(() => {
     if (!containerRef.current || !imgRef.current) return;
 
     const isTouch =
@@ -62,14 +68,12 @@ export default function ParallaxImage({
       className={`overflow-hidden relative ${className}`}
       data-cursor-img={dataCursorImg || src}
     >
-      {/* eslint-disable-next-app-element */}
       <img
         ref={imgRef}
         src={src}
         alt={alt}
-        className="w-full h-full object-cover transition-transform duration-700 hover:scale-105 will-change-transform transform-gpu"
-        loading="lazy"
-        decoding="async"
+        className="w-full h-full object-cover transform-gpu"
+        loading="eager"
       />
     </div>
   );

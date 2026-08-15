@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ImageLightboxModal from './ImageLightboxModal';
 import { ZoomIn } from 'lucide-react';
 import { getOptimizedImageUrl } from '@/lib/image-optimization';
@@ -21,6 +21,16 @@ export default function ProjectGalleryShowcase({
   projectTitle,
 }: ProjectGalleryShowcaseProps) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!images || images.length === 0) return;
+    images.forEach((img) => {
+      if (img.imageUrl) {
+        const pImg = new Image();
+        pImg.src = getOptimizedImageUrl(img.imageUrl, 'balanced');
+      }
+    });
+  }, [images]);
 
   const lightboxImages = images.map((img) => ({
     id: img.id,
@@ -53,6 +63,7 @@ export default function ProjectGalleryShowcase({
                 src={getOptimizedImageUrl(img.imageUrl, 'balanced')}
                 alt={img.altText || projectTitle}
                 className="w-full h-full sm:h-auto object-cover group-hover:scale-105 transition-transform duration-700 block"
+                loading="eager"
               />
 
               {/* Corner Frame Accents */}
@@ -61,7 +72,7 @@ export default function ProjectGalleryShowcase({
 
               {/* Magnifying Glass Zoom Icon in Top-Right Corner (No Dimming Overlay) */}
               <div className="absolute top-1.5 right-1.5 sm:top-4 sm:right-4 z-20 pointer-events-none">
-                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-none border border-amber-400/60 bg-slate-950/80 backdrop-blur-md flex items-center justify-center text-amber-400 opacity-80 group-hover:opacity-100 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-400 transition-all shadow-lg">
+                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-none border border-amber-400/60 bg-slate-950/90 flex items-center justify-center text-amber-400 opacity-80 group-hover:opacity-100 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-400 transition-colors shadow-lg">
                   <ZoomIn className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
               </div>
@@ -71,7 +82,7 @@ export default function ProjectGalleryShowcase({
 
               {/* Frame Index Overlay */}
               <div className="absolute top-1.5 left-1.5 sm:top-4 sm:left-4 z-20 pointer-events-none">
-                <span className="px-1.5 py-0.5 sm:px-3 sm:py-1 bg-slate-950/80 backdrop-blur-md text-[7px] sm:text-[9px] uppercase font-mono text-amber-400 border border-amber-500/30">
+                <span className="px-1.5 py-0.5 sm:px-3 sm:py-1 bg-slate-950/90 text-[7px] sm:text-[9px] uppercase font-mono text-amber-400 border border-amber-500/30">
                   FRAME 0{idx + 1}
                 </span>
               </div>
