@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getTenantSettings } from '@/services/settings.service';
+import SmoothScroll from '@/components/animations/SmoothScroll';
 import './globals.css';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -57,8 +58,11 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="bg-slate-950 text-slate-100 antialiased selection:bg-amber-500/30 selection:text-amber-200">
-        {children}
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );
 }
+
