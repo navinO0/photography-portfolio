@@ -93,42 +93,39 @@ export default function CategoryDiscovery({ categories }: CategoryDiscoveryProps
           </div>
         </div>
 
-        {/* 2-Column Luxury Tile Grid with Mobile Zig-Zag Layout */}
+        {/* 2-Column Luxury Tile Grid */}
         {viewStyle === 'grid' ? (
-          <div className="grid grid-cols-2 md:grid-cols-2 gap-[1px] sm:gap-6 md:gap-8 -mx-[1px] sm:mx-0 px-0">
-            {categories.map((cat, idx) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 -mx-4 sm:mx-0">
+            {categories.map((cat) => (
               <TiltCard3D
                 key={cat.id}
                 dataCursorImg={cat.coverImage || undefined}
-                className={`group relative overflow-hidden bg-slate-900 border border-slate-800 rounded-none aspect-[4/5] md:aspect-[16/10] ${
-                  idx % 2 === 1 ? 'mt-6 md:mt-0' : 'mt-0'
-                }`}
+                className="group relative overflow-hidden bg-slate-900 border-y sm:border border-slate-800 rounded-none transition-all duration-500 hover:border-amber-500/70 flex flex-col"
               >
-                <Link href={`/portfolio?category=${cat.slug}`} className="block w-full h-full">
-                  {cat.coverImage && (
-                    /* eslint-disable-next-app-element */
-                    <img
-                      src={cat.coverImage}
-                      alt={cat.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out filter brightness-90 group-hover:brightness-100"
-                    />
-                  )}
-                  {/* Dark gradient overlay for clear typography contrast */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-85 group-hover:opacity-75 transition-opacity pointer-events-none" />
-
-                  {/* Centered Serif Category Name Overlay */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-2 sm:p-6 text-center z-10">
-                    <span className="text-[7px] sm:text-[10px] uppercase tracking-[0.2em] font-mono text-white mb-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 transform sm:translate-y-2 sm:group-hover:translate-y-0">
-                      Explore Gallery
-                    </span>
-                    <h3 className="text-sm sm:text-4xl md:text-5xl font-serif text-slate-100 group-hover:text-amber-300 transition-colors drop-shadow-lg tracking-wide line-clamp-2">
-                      {cat.name}
-                    </h3>
-                    {cat.description && (
-                      <p className="text-[9px] sm:text-xs text-white/90 max-w-sm mt-1 font-light opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 transform sm:translate-y-2 sm:group-hover:translate-y-0 line-clamp-2">
-                        {cat.description}
-                      </p>
+                <Link href={`/portfolio?category=${cat.slug}`} className="w-full h-full flex flex-col">
+                  {/* Clean Category Photography Window */}
+                  <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] overflow-hidden bg-slate-950">
+                    {cat.coverImage && (
+                      /* eslint-disable-next-app-element */
+                      <img
+                        src={cat.coverImage}
+                        alt={cat.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      />
                     )}
+                  </div>
+
+                  {/* Compact Content Below Image */}
+                  <div className="p-4 sm:p-4.5 bg-slate-900 flex flex-col justify-center border-t border-slate-800/80 group-hover:bg-slate-950 transition-colors">
+                    <div className="flex items-center justify-between gap-2 mb-1 text-[10px] sm:text-xs text-amber-400 font-mono">
+                      <span>EXPLORE COLLECTION</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <h3 className="text-base sm:text-lg font-serif text-slate-100 group-hover:text-amber-300 transition-colors leading-snug line-clamp-1 font-normal">
+                        {cat.name}
+                      </h3>
+                      <ArrowRight className="w-4 h-4 text-amber-400 shrink-0 group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </div>
                 </Link>
               </TiltCard3D>

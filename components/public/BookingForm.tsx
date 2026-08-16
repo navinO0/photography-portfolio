@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, CheckCircle2, User, Mail, Phone, MapPin, MessageSquare, ArrowRight, ArrowLeft, Send, Sparkles } from 'lucide-react';
+import { Calendar, CheckCircle2, User, Mail, Phone, MapPin, MessageSquare, ArrowRight, ArrowLeft, Send } from 'lucide-react';
 
 interface BookingFormProps {
   whatsappNumber?: string;
@@ -95,7 +95,6 @@ export default function BookingForm({ whatsappNumber = '15552345678' }: BookingF
             rel="noopener noreferrer"
             className="px-6 py-3 rounded-none bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-semibold text-xs uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
           >
-            <Sparkles className="w-4 h-4" />
             <span>Fast Track via WhatsApp</span>
           </a>
           <button

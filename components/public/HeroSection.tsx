@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Calendar, Sparkles } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import MagneticButton from '../animations/MagneticButton';
 import TextReveal from '../animations/TextReveal';
 import Hero3DCanvas from '../animations/Hero3DCanvas';

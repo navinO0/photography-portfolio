@@ -135,72 +135,53 @@ export default function FeaturedStories({ projects }: FeaturedStoriesProps) {
       </div>
 
       {layoutMode === 'grid' ? (
-        /* Dynamic 3-Column Luxury Portfolio Grid (Full-bleed Edge-to-Edge on Mobile) */
-        <div className="w-full max-w-[1920px] mx-auto px-0 sm:px-8 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-          {filteredProjects.map((proj, idx) => {
-            // Elegant aspect ratio variations for masonry feel
-            const aspectRatios = ['aspect-[4/5]', 'aspect-[3/4]', 'aspect-[4/5]', 'aspect-[16/11]'];
-            const aspectClass = aspectRatios[idx % aspectRatios.length];
-
+        /* Dynamic 3-Column Luxury Portfolio Grid */
+        <div className="w-full max-w-[1920px] mx-auto px-0 sm:px-8 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {filteredProjects.map((proj) => {
             return (
               <TiltCard3D
                 key={proj.id}
                 dataCursorImg={proj.coverImage}
-                className={`group relative overflow-hidden bg-slate-900 border border-slate-800/90 rounded-none shadow-2xl hover:border-amber-500/70 transition-all duration-700 ${aspectClass}`}
+                className="group relative overflow-hidden bg-slate-900 border-y sm:border border-slate-800/90 rounded-none hover:border-amber-500/70 transition-all duration-500 flex flex-col"
               >
-                <Link href={`/portfolio/${proj.slug}`} className="block w-full h-full relative overflow-hidden">
-                  {/* Image */}
-                  {proj.coverImage && (
-                    /* eslint-disable-next-app-element */
-                    <img
-                      src={getOptimizedImageUrl(proj.coverImage, 'balanced')}
-                      alt={proj.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                      loading="eager"
-                      onError={(e) => {
-                        (e.currentTarget as HTMLElement).style.display = 'none';
-                      }}
-                    />
-                  )}
+                <Link href={`/portfolio/${proj.slug}`} className="w-full h-full flex flex-col">
+                  {/* Large Photography Showcase Window (Aspect 3/4 on mobile for increased height) */}
+                  <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] overflow-hidden bg-slate-950">
+                    {proj.coverImage && (
+                      /* eslint-disable-next-app-element */
+                      <img
+                        src={getOptimizedImageUrl(proj.coverImage, 'balanced')}
+                        alt={proj.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                        loading="eager"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLElement).style.display = 'none';
+                        }}
+                      />
+                    )}
 
-                  {/* Gradient Overlay (Always dark gradient regardless of theme) */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-90 group-hover:opacity-95 transition-opacity duration-300 pointer-events-none" />
-
-                  {/* Top Category Badge */}
-                  <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20">
-                    <span className="px-3 py-1.5 rounded-none bg-black/90 backdrop-blur-md text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-white border border-amber-500/40 font-mono font-medium shadow-lg inline-block">
-                      {proj.category.name}
-                    </span>
-                  </div>
-
-                  {/* Geometric Corner Accent */}
-                  <div className="absolute top-4 right-4 w-5 h-5 border-r border-t border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-4 left-4 w-5 h-5 border-l border-b border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  {/* Card Bottom Content */}
-                  <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 z-20">
-                    <div className="flex items-center gap-3 text-[10px] sm:text-xs text-white font-mono mb-2">
-                      {proj.location && (
-                        <span className="flex items-center gap-1 bg-black/90 backdrop-blur-md px-2 py-0.5 border border-slate-700/80 text-white">
-                          <MapPin className="w-3 h-3 text-amber-400 shrink-0" />
-                          <span className="truncate max-w-[140px]">{proj.location}</span>
-                        </span>
-                      )}
-                      {proj.eventDate && (
-                        <span className="flex items-center gap-1 bg-black/90 backdrop-blur-md px-2 py-0.5 border border-slate-700/80 text-white">
-                          <Calendar className="w-3 h-3 text-amber-400 shrink-0" />
-                          {new Date(proj.eventDate).getFullYear()}
-                        </span>
-                      )}
+                    {/* Top Category Badge */}
+                    <div className="absolute top-4 left-4 z-20">
+                      <span className="px-3 py-1 bg-black/85 backdrop-blur-md text-[9px] uppercase tracking-[0.25em] text-white border border-amber-500/40 font-mono font-medium inline-block">
+                        {proj.category.name}
+                      </span>
                     </div>
 
-                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-serif text-white group-hover:text-amber-200 transition-colors leading-snug mb-3 font-light">
-                      {proj.title}
-                    </h3>
+                    {/* Subtle Corner Accent */}
+                    <div className="absolute top-3 right-3 w-4 h-4 border-r border-t border-amber-400/60 z-20 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
 
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 group-hover:bg-amber-500 text-white group-hover:text-white text-xs uppercase tracking-[0.2em] font-mono border border-amber-500/40 group-hover:border-amber-400 transition-all duration-300 font-bold shadow-md">
-                      <span>Explore Story</span>
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  {/* Compact Minimalist Content Section Below Image */}
+                  <div className="p-4 sm:p-4.5 bg-slate-900 flex flex-col justify-center border-t border-slate-800/80 group-hover:bg-slate-950 transition-colors">
+                    <div className="flex items-center justify-between gap-2 mb-1 text-[10px] sm:text-xs text-amber-400 font-mono">
+                      <span className="truncate">{proj.location || 'Studio Exclusive'}</span>
+                      {proj.eventDate && <span>{new Date(proj.eventDate).getFullYear()}</span>}
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <h3 className="text-base sm:text-lg font-serif text-slate-100 group-hover:text-amber-300 transition-colors leading-snug line-clamp-1 font-normal">
+                        {proj.title}
+                      </h3>
+                      <ArrowRight className="w-4 h-4 text-amber-400 shrink-0 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
                 </Link>
@@ -217,57 +198,47 @@ export default function FeaturedStories({ projects }: FeaturedStoriesProps) {
           {filteredProjects.map((proj) => (
             <div
               key={proj.id}
-              className="w-[85vw] sm:w-[480px] md:w-[560px] shrink-0 snap-start group relative overflow-hidden rounded-none bg-slate-900 border border-slate-800 shadow-2xl"
+              className="w-[85vw] sm:w-[420px] md:w-[460px] shrink-0 snap-start group relative overflow-hidden rounded-none bg-slate-900 border border-slate-800 flex flex-col"
               data-cursor-img={proj.coverImage}
             >
-              <div className="aspect-[4/5] relative overflow-hidden">
-                {proj.coverImage && (
-                  /* eslint-disable-next-app-element */
-                  <img
-                    src={proj.coverImage}
-                    alt={proj.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    loading="eager"
-                    onError={(e) => {
-                      (e.currentTarget as HTMLElement).style.display = 'none';
-                    }}
-                  />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-85 group-hover:opacity-95 transition-opacity" />
+              <Link href={`/portfolio/${proj.slug}`} className="w-full h-full flex flex-col">
+                {/* Large Photography Window */}
+                <div className="w-full aspect-[4/3] sm:aspect-[4/5] relative overflow-hidden bg-slate-950">
+                  {proj.coverImage && (
+                    /* eslint-disable-next-app-element */
+                    <img
+                      src={proj.coverImage}
+                      alt={proj.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      loading="eager"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLElement).style.display = 'none';
+                      }}
+                    />
+                  )}
 
-                <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10">
-                  <span className="px-3 py-1 rounded-none bg-black/80 backdrop-blur-md text-[9px] sm:text-[10px] uppercase tracking-widest text-amber-300 border border-amber-500/30 font-mono">
-                    {proj.category.name}
-                  </span>
-                </div>
-
-                <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 z-10">
-                  <div className="flex items-center gap-3 text-[10px] sm:text-xs text-slate-200 font-mono mb-1.5 sm:mb-2">
-                    {proj.location && (
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-3 h-3 text-amber-400" />
-                        {proj.location}
-                      </span>
-                    )}
-                    {proj.eventDate && (
-                      <span className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3 text-amber-400" />
-                        {new Date(proj.eventDate).getFullYear()}
-                      </span>
-                    )}
+                  {/* Top Category Badge */}
+                  <div className="absolute top-4 left-4 z-20">
+                    <span className="px-3 py-1 bg-black/85 backdrop-blur-md text-[9px] uppercase tracking-[0.25em] text-white border border-amber-500/40 font-mono font-medium shadow-lg inline-block">
+                      {proj.category.name}
+                    </span>
                   </div>
-                  <h3 className="text-lg sm:text-2xl font-serif text-white group-hover:text-amber-300 transition-colors leading-tight mb-3 sm:mb-4">
-                    {proj.title}
-                  </h3>
-                  <Link
-                    href={`/portfolio/${proj.slug}`}
-                    className="inline-flex items-center gap-2 text-[10px] sm:text-xs uppercase tracking-widest text-amber-400 group-hover:underline font-mono"
-                  >
-                    <span>View Full Story</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
                 </div>
-              </div>
+
+                {/* Compact Content Below Image */}
+                <div className="p-4 sm:p-4.5 bg-slate-900 flex flex-col justify-center border-t border-slate-800/80">
+                  <div className="flex items-center justify-between gap-2 mb-1 text-[10px] sm:text-xs text-amber-400 font-mono">
+                    <span className="truncate">{proj.location || 'Studio Exclusive'}</span>
+                    {proj.eventDate && <span>{new Date(proj.eventDate).getFullYear()}</span>}
+                  </div>
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="text-base sm:text-lg font-serif text-slate-100 group-hover:text-amber-300 transition-colors leading-snug line-clamp-1 font-normal">
+                      {proj.title}
+                    </h3>
+                    <ArrowRight className="w-4 h-4 text-amber-400 shrink-0 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </Link>
             </div>
           ))}
         </div>

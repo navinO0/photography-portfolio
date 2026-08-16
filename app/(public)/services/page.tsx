@@ -2,7 +2,7 @@ import { getActiveServices } from '@/services/booking.service';
 import { getTenantSettings } from '@/services/settings.service';
 import { getProjectsByCategory } from '@/services/portfolio.service';
 import Link from 'next/link';
-import { Check, Sparkles, MessageCircle, ArrowUpRight } from 'lucide-react';
+import { Check, MessageCircle, ArrowUpRight } from 'lucide-react';
 import MagneticButton from '@/components/animations/MagneticButton';
 
 export default async function ServicesPage() {
@@ -49,12 +49,12 @@ export default async function ServicesPage() {
           return (
             <div
               key={srv.id}
-              className="bg-slate-900/60 backdrop-blur-xl rounded-none p-5 sm:p-8 border border-slate-800 flex flex-col justify-between hover:border-amber-500/50 transition-all shadow-xl group overflow-hidden"
+              className="bg-slate-900/60 backdrop-blur-xl rounded-none p-5 sm:p-8 border border-slate-800 flex flex-col justify-between hover:border-amber-500/50 transition-all group overflow-hidden"
             >
               <div>
-                {/* Edge-to-Edge Image Header on Mobile Devices */}
+                {/* Full-Bleed Edge-to-Edge Image Header */}
                 {srv.image && (
-                  <div className="rounded-none overflow-hidden aspect-[16/9] mb-6 border-b sm:border border-slate-800 -mx-5 -mt-5 sm:mx-0 sm:mt-0">
+                  <div className="rounded-none overflow-hidden aspect-[4/3] mb-6 border-b border-slate-800 -mx-5 -mt-5 sm:-mx-8 sm:-mt-8">
                     {/* eslint-disable-next-app-element */}
                     <img
                       src={srv.image}
@@ -99,7 +99,6 @@ export default async function ServicesPage() {
       {/* Bespoke Quote Banner */}
       <div className="max-w-4xl mx-auto px-4 text-center mb-20 sm:mb-28">
         <div className="bg-slate-900/60 rounded-none p-8 sm:p-12 border border-slate-800 shadow-2xl">
-          <Sparkles className="w-8 h-8 text-amber-400 mx-auto mb-4" />
           <h3 className="text-xl sm:text-2xl font-serif text-slate-200 mb-3">
             To turn all your memories into a lifetime
           </h3>

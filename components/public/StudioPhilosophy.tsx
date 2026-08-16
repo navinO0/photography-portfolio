@@ -39,10 +39,10 @@ export default function StudioPhilosophy({
 
   return (
     <section className="bg-slate-950 py-4 sm:py-10 text-slate-100 border-t border-slate-900 overflow-hidden">
-      <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-10 items-center">
-        {/* Visual Composition */}
-        <div className="relative">
-          <div className="rounded-none overflow-hidden shadow-2xl border border-slate-800 aspect-[4/5] relative z-10">
+      <div className="w-full max-w-[1920px] mx-auto px-0 sm:px-6 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-10 items-center">
+        {/* Visual Composition - Full Bleed Edge-to-Edge on Mobile */}
+        <div className="relative w-full">
+          <div className="rounded-none overflow-hidden border-y sm:border border-slate-800 aspect-[3/4] sm:aspect-[4/5] relative z-10 w-full">
             <ParallaxImage
               src={philosophyImage}
               alt="Studio Philosophy Portrait"
@@ -50,7 +50,7 @@ export default function StudioPhilosophy({
             />
           </div>
           {/* Overlay Floating Card */}
-          <div className="absolute -bottom-8 -right-8 z-20 bg-slate-900/90 backdrop-blur-xl p-6 rounded-none border border-amber-500/30 max-w-xs shadow-2xl hidden sm:block">
+          <div className="absolute -bottom-8 -right-8 z-20 bg-slate-900/90 backdrop-blur-xl p-6 rounded-none border border-amber-500/30 max-w-xs hidden sm:block">
             <Award className="w-8 h-8 text-amber-400 mb-3" />
             <p className="text-xs uppercase tracking-widest text-amber-300 font-mono mb-1">
               {philosophyAwardTitle}
@@ -61,8 +61,8 @@ export default function StudioPhilosophy({
           </div>
         </div>
 
-        {/* Narrative & Philosophy */}
-        <div>
+        {/* Narrative & Philosophy - Padded on Mobile */}
+        <div className="px-4 sm:px-0">
           <span className="text-xs uppercase tracking-[0.3em] font-mono text-amber-400 block mb-4">
             {philosophyTag}
           </span>

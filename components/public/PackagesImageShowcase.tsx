@@ -34,12 +34,12 @@ function PackageCard({
   return (
     <div
       key={srv.id}
-      className="group relative rounded-none overflow-hidden bg-slate-900/60 backdrop-blur-xl border border-slate-800 shadow-2xl transition-all duration-500 hover:border-amber-500/80 flex flex-col justify-between"
+      className="group relative rounded-none overflow-hidden bg-slate-900/60 backdrop-blur-xl border border-slate-800 transition-all duration-500 hover:border-amber-500/80 flex flex-col justify-between"
     >
       <div>
         {/* Clean Image Header without Gradient Overlay */}
         {bgImage && !imgError && (
-          <div className="relative w-full aspect-[16/10] overflow-hidden bg-slate-950 border-b border-slate-800">
+          <div className="relative w-full aspect-[4/3] overflow-hidden bg-slate-950 border-b border-slate-800">
             {/* eslint-disable-next-app-element */}
             <img
               src={getOptimizedImageUrl(bgImage, 'balanced')}
@@ -59,7 +59,7 @@ function PackageCard({
               </span>
 
               {srv.priceStarting && (
-                <span className="px-2.5 py-1 bg-amber-500 text-white font-mono font-semibold text-[9px] sm:text-xs uppercase tracking-widest shadow-lg">
+                <span className="px-2.5 py-1 bg-amber-500 text-white font-mono font-semibold text-[9px] sm:text-xs uppercase tracking-widest">
                   STARTING {srv.priceStarting}
                 </span>
               )}
@@ -75,7 +75,7 @@ function PackageCard({
                 PACKAGE 0{idx + 1}
               </span>
               {srv.priceStarting && (
-                <span className="px-2.5 py-1 bg-amber-500 text-white font-mono font-semibold text-[9px] sm:text-xs uppercase tracking-widest shadow-lg">
+                <span className="px-2.5 py-1 bg-amber-500 text-white font-mono font-semibold text-[9px] sm:text-xs uppercase tracking-widest">
                   STARTING {srv.priceStarting}
                 </span>
               )}
@@ -118,7 +118,7 @@ function PackageCard({
       <div className="p-5 sm:p-6 pt-0">
         <Link
           href="/booking"
-          className="w-full py-3 px-4 rounded-none bg-amber-500 hover:bg-amber-400 text-white font-semibold text-xs uppercase tracking-[0.2em] text-center transition-all flex items-center justify-center gap-2 shadow-xl"
+          className="w-full py-3 px-4 rounded-none bg-amber-500 hover:bg-amber-400 text-white font-semibold text-xs uppercase tracking-[0.2em] text-center transition-all flex items-center justify-center gap-2"
         >
           <span>Commission Package</span>
           <ArrowUpRight className="w-4 h-4 text-white" />

@@ -42,7 +42,7 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
           Client Praise & Legacy Stories
         </h2>
 
-        <div className="bg-slate-900/60 backdrop-blur-xl rounded-none p-8 md:p-16 border border-slate-800 relative shadow-2xl">
+        <div className="bg-slate-900/60 backdrop-blur-xl rounded-none p-8 md:p-16 border border-slate-800 relative">
           <Quote className="w-12 h-12 text-amber-500/20 absolute top-8 left-8" />
 
           {/* Rating Stars */}
@@ -64,7 +64,7 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
               <img
                 src={active.clientImage}
                 alt={active.clientName}
-                className="w-14 h-14 rounded-none object-cover border-2 border-amber-400/60 mb-2 shadow-lg"
+                className="w-14 h-14 rounded-none object-cover border-2 border-amber-400/60 mb-2"
               />
             )}
             <h4 className="text-base font-serif text-amber-300">{active.clientName}</h4>

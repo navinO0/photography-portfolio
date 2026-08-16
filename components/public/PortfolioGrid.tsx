@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, Grid, Box, Camera, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Grid, Box, Camera } from 'lucide-react';
 import ParallaxImage from '../animations/ParallaxImage';
 import TiltCard3D from '../animations/TiltCard3D';
 import ThreeGalleryShowcase from './ThreeGalleryShowcase';
@@ -143,55 +143,48 @@ export default function PortfolioGrid({ categories, projects }: PortfolioGridPro
               <TiltCard3D
                 key={proj.id}
                 dataCursorImg={proj.coverImage}
-                className={`group relative overflow-hidden bg-slate-900 border border-slate-800/90 rounded-none transition-all duration-700 hover:border-amber-500/70 shadow-2xl ${getCardAspect(
-                  idx
-                )}`}
+                className="group relative overflow-hidden bg-slate-900 border-y sm:border border-slate-800/90 rounded-none transition-all duration-500 hover:border-amber-500/70 flex flex-col"
               >
-                <Link href={`/portfolio/${proj.slug}`} className="block w-full h-full relative overflow-hidden">
-                  <ParallaxImage
-                    src={getOptimizedImageUrl(proj.coverImage, 'balanced')}
-                    alt={proj.title}
-                    className="w-full h-full"
-                  />
+                <Link href={`/portfolio/${proj.slug}`} className="w-full h-full flex flex-col">
+                  {/* Large Photography Showcase Window */}
+                  <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] overflow-hidden bg-slate-950">
+                    <ParallaxImage
+                      src={getOptimizedImageUrl(proj.coverImage, 'balanced')}
+                      alt={proj.title}
+                      className="w-full h-full"
+                    />
 
-                  {/* Corner Accents */}
-                  <div className="absolute top-4 left-4 w-5 h-5 border-l border-t border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute top-4 right-4 w-5 h-5 border-r border-t border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-4 left-4 w-5 h-5 border-l border-b border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-4 right-4 w-5 h-5 border-r border-b border-amber-400/80 z-20 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  {/* Gradient Dark Overlay (Always dark gradient regardless of theme) */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-300 pointer-events-none" />
-
-                  {/* Top-Left Category Badge */}
-                  <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20">
-                    <span className="px-3 py-1.5 rounded-none bg-black/90 backdrop-blur-md text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-white border border-amber-500/40 font-mono font-medium shadow-lg inline-block">
-                      {proj.category.name}
-                    </span>
-                  </div>
-
-                  {/* Top-Right Action Arrow & Frame Badge */}
-                  <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 flex items-center gap-2">
-                    <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-none bg-black/90 backdrop-blur-md border border-amber-500/40 text-[9px] uppercase font-mono text-white">
-                      <Camera className="w-3 h-3 text-amber-400" />
-                      <span>FRAME 0{idx + 1}</span>
-                    </span>
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-none bg-black/90 backdrop-blur-md border border-amber-500/40 flex items-center justify-center text-white group-hover:bg-amber-500 group-hover:text-white transition-colors shadow-lg">
-                      <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                    </div>
-                  </div>
-
-                  {/* Bottom Info Overlay */}
-                  <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 z-20 transform group-hover:-translate-y-1 transition-transform duration-500">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Sparkles className="w-3 h-3 text-amber-400 shrink-0" />
-                      <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-white font-mono">
-                        {proj.location || 'Studio Exclusive'}
+                    {/* Top-Left Category Badge */}
+                    <div className="absolute top-4 left-4 z-20">
+                      <span className="px-3 py-1 bg-black/85 backdrop-blur-md text-[9px] uppercase tracking-[0.25em] text-white border border-amber-500/40 font-mono font-medium inline-block">
+                        {proj.category.name}
                       </span>
                     </div>
-                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-serif text-white group-hover:text-amber-200 transition-colors leading-snug line-clamp-2 font-light">
-                      {proj.title}
-                    </h3>
+
+                    {/* Top-Right Action Arrow & Frame Badge */}
+                    <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
+                      <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-none bg-black/85 backdrop-blur-md border border-amber-500/40 text-[9px] uppercase font-mono text-white">
+                        <Camera className="w-3 h-3 text-amber-400" />
+                        <span>FRAME 0{idx + 1}</span>
+                      </span>
+                      <div className="w-8 h-8 rounded-none bg-black/85 backdrop-blur-md border border-amber-500/40 flex items-center justify-center text-white group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                        <ArrowUpRight className="w-4 h-4 text-white" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Compact Minimalist Content Section Below Image */}
+                  <div className="p-4 sm:p-4.5 bg-slate-900 flex flex-col justify-center border-t border-slate-800/80 group-hover:bg-slate-950 transition-colors">
+                    <div className="flex items-center justify-between gap-2 mb-1 text-[10px] sm:text-xs text-amber-400 font-mono">
+                      <span className="truncate">{proj.location || 'Studio Exclusive'}</span>
+                      {proj.eventDate && <span>{new Date(proj.eventDate).getFullYear()}</span>}
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <h3 className="text-base sm:text-lg font-serif text-slate-100 group-hover:text-amber-300 transition-colors leading-snug line-clamp-1 font-normal">
+                        {proj.title}
+                      </h3>
+                      <ArrowUpRight className="w-4 h-4 text-amber-400 shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </div>
                   </div>
                 </Link>
               </TiltCard3D>

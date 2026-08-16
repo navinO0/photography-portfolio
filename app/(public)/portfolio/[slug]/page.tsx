@@ -2,7 +2,7 @@ import { getProjectBySlug, getRelatedProjects } from '@/services/portfolio.servi
 import { getTenantSettings } from '@/services/settings.service';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { MapPin, Calendar, ArrowLeft, Sparkles, Camera, Aperture, MessageCircle } from 'lucide-react';
+import { MapPin, Calendar, ArrowLeft, Camera, Aperture, MessageCircle } from 'lucide-react';
 import ParallaxImage from '@/components/animations/ParallaxImage';
 import TextReveal from '@/components/animations/TextReveal';
 import ProjectGalleryShowcase from '@/components/public/ProjectGalleryShowcase';

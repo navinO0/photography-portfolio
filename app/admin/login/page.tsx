@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Camera, Lock, Mail, ArrowRight, Sparkles } from 'lucide-react';
+import { Camera, Lock, Mail, ArrowRight } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('');

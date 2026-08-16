@@ -1,5 +1,5 @@
 import { getTenantSettings } from '@/services/settings.service';
-import { Mail, Phone, MapPin, MessageCircle, Clock, Sparkles } from 'lucide-react';
+import { Mail, Phone, MapPin, MessageCircle, Clock } from 'lucide-react';
 
 export default async function ContactPage() {
   const settings = await getTenantSettings();
@@ -22,7 +22,6 @@ export default async function ContactPage() {
         {/* Contact Info Card */}
         <div className="bg-slate-900/60 backdrop-blur-xl rounded-3xl p-8 md:p-12 border border-slate-800 space-y-8 shadow-2xl">
           <div className="flex items-center gap-3 text-amber-400 font-mono text-xs uppercase tracking-widest">
-            <Sparkles className="w-4 h-4" />
             <span>Studio Headquarters</span>
           </div>
 
