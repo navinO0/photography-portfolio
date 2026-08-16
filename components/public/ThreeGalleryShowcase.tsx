@@ -140,7 +140,7 @@ export default function ThreeGalleryShowcase({ projects }: ThreeGalleryShowcaseP
               <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-90 pointer-events-none" />
               
               <div className="absolute bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-5 z-10">
-                <span className="text-[9px] uppercase font-mono text-amber-400 block mb-0.5">
+                <span className="text-[9px] uppercase font-mono text-white block mb-0.5">
                   {proj.category.name}
                 </span>
                 <h4 className="text-sm sm:text-lg font-serif text-slate-100 tracking-wide line-clamp-1">
@@ -167,7 +167,7 @@ export default function ThreeGalleryShowcase({ projects }: ThreeGalleryShowcaseP
 
             <Link
               href={`/portfolio/${activeProject.slug}`}
-              className="w-full sm:w-auto px-5 py-2.5 sm:py-3.5 rounded-none bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-slate-950 font-bold text-[10px] sm:text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:brightness-110 transition-all shrink-0"
+              className="w-full sm:w-auto px-5 py-2.5 sm:py-3.5 rounded-none bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-white font-semibold text-[10px] sm:text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:brightness-110 transition-all shrink-0"
             >
               <span>Explore Narrative</span>
               <ArrowUpRight className="w-3.5 h-3.5" />

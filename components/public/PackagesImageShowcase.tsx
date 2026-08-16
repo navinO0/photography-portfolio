@@ -59,7 +59,7 @@ function PackageCard({
               </span>
 
               {srv.priceStarting && (
-                <span className="px-2.5 py-1 bg-amber-500 text-black font-mono font-bold text-[9px] sm:text-xs uppercase tracking-widest shadow-lg">
+                <span className="px-2.5 py-1 bg-amber-500 text-white font-mono font-semibold text-[9px] sm:text-xs uppercase tracking-widest shadow-lg">
                   STARTING {srv.priceStarting}
                 </span>
               )}
@@ -75,7 +75,7 @@ function PackageCard({
                 PACKAGE 0{idx + 1}
               </span>
               {srv.priceStarting && (
-                <span className="px-2.5 py-1 bg-amber-500 text-black font-mono font-bold text-[9px] sm:text-xs uppercase tracking-widest shadow-lg">
+                <span className="px-2.5 py-1 bg-amber-500 text-white font-mono font-semibold text-[9px] sm:text-xs uppercase tracking-widest shadow-lg">
                   STARTING {srv.priceStarting}
                 </span>
               )}
@@ -118,10 +118,10 @@ function PackageCard({
       <div className="p-5 sm:p-6 pt-0">
         <Link
           href="/booking"
-          className="w-full py-3 px-4 rounded-none bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-[0.2em] text-center transition-all flex items-center justify-center gap-2 shadow-xl"
+          className="w-full py-3 px-4 rounded-none bg-amber-500 hover:bg-amber-400 text-white font-semibold text-xs uppercase tracking-[0.2em] text-center transition-all flex items-center justify-center gap-2 shadow-xl"
         >
           <span>Commission Package</span>
-          <ArrowUpRight className="w-4 h-4 text-black" />
+          <ArrowUpRight className="w-4 h-4 text-white" />
         </Link>
       </div>
     </div>
@@ -149,7 +149,7 @@ export default function PackagesImageShowcase({ services }: PackagesImageShowcas
 
           <Link
             href="/services"
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-none border border-amber-500/40 bg-slate-900/80 hover:bg-amber-500 hover:text-slate-950 font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] transition-all text-amber-400 shrink-0 self-start md:self-auto"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-none border border-amber-500/40 bg-slate-900/80 hover:bg-amber-500 hover:text-white font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] transition-all text-amber-400 shrink-0 self-start md:self-auto"
           >
             <span>View All Packages</span>
             <ArrowUpRight className="w-3.5 h-3.5" />

@@ -32,6 +32,10 @@ export default function Navbar({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const pagesWithoutHero = ['/portfolio', '/services', '/booking', '/contact'];
+  const hasHeroBanner = !pagesWithoutHero.includes(pathname);
+  const isTransparentHeader = hasHeroBanner && !scrolled;
+
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Portfolio', href: '/portfolio' },
@@ -44,9 +48,9 @@ export default function Navbar({
     <>
       <header
         className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ease-in-out ${
-          scrolled
-            ? 'bg-slate-950/98 border-b border-slate-800/80 py-2.5 sm:py-3 shadow-2xl'
-            : 'bg-gradient-to-b from-black/90 via-black/40 to-transparent py-4 sm:py-6 border-none'
+          isTransparentHeader
+            ? 'bg-gradient-to-b from-black/90 via-black/40 to-transparent py-4 sm:py-6 border-none'
+            : 'bg-slate-950/98 border-b border-slate-800/80 py-2.5 sm:py-3 shadow-2xl'
         }`}
       >
         <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 flex items-center justify-between">
@@ -54,7 +58,7 @@ export default function Navbar({
           <Link href="/" className="group flex items-center gap-3" data-cursor="LUMINA">
             <div
               className={`w-10 h-10 rounded-none border border-amber-500/50 flex items-center justify-center transition-all ${
-                scrolled ? 'bg-slate-900/60' : 'bg-black/60'
+                isTransparentHeader ? 'bg-black/60' : 'bg-slate-900/60'
               } group-hover:border-amber-400 group-hover:scale-105`}
             >
               <Camera className="w-5 h-5 text-amber-400" />
@@ -62,7 +66,7 @@ export default function Navbar({
             <div>
               <span
                 className={`text-xl font-serif tracking-widest transition-colors uppercase block ${
-                  scrolled ? 'text-slate-100 hover:text-amber-400' : 'text-white hover:text-amber-300 drop-shadow'
+                  isTransparentHeader ? 'text-white hover:text-amber-300 drop-shadow' : 'text-slate-100 hover:text-amber-400'
                 }`}
               >
                 {photographerName}
@@ -84,9 +88,9 @@ export default function Navbar({
                   className={`relative text-xs uppercase tracking-[0.2em] transition-colors py-1 ${
                     isActive
                       ? 'text-amber-400 font-bold'
-                      : scrolled
-                      ? 'text-slate-300 hover:text-amber-400'
-                      : 'text-white/90 hover:text-amber-300'
+                      : isTransparentHeader
+                      ? 'text-white/90 hover:text-amber-300'
+                      : 'text-slate-300 hover:text-amber-400'
                   }`}
                   data-cursor={link.name}
                 >
@@ -105,8 +109,8 @@ export default function Navbar({
               href={`https://wa.me/${whatsappNumber}?text=Hello!%20I%20would%20like%20to%20inquire%20about%20a%20photography%20session.`}
               target="_blank"
               rel="noopener noreferrer"
-              className={`text-xs uppercase tracking-widest flex items-center gap-2 transition-colors px-3 py-2 font-mono ${
-                scrolled ? 'text-slate-300 hover:text-amber-400' : 'text-white/90 hover:text-amber-300'
+              className={`flex items-center gap-2 text-xs uppercase tracking-widest transition-colors ${
+                isTransparentHeader ? 'text-white/90 hover:text-amber-300' : 'text-slate-300 hover:text-amber-400'
               }`}
             >
               <Phone className="w-3.5 h-3.5 text-amber-400" />
@@ -118,8 +122,8 @@ export default function Navbar({
                 href="/booking"
                 className="relative group px-5 py-2.5 rounded-none border border-amber-400 bg-amber-500 hover:bg-amber-400 overflow-hidden flex items-center gap-2 transition-all shadow-md"
               >
-                <Calendar className="w-3.5 h-3.5 text-black group-hover:rotate-12 transition-transform shrink-0" />
-                <span className="text-xs uppercase tracking-widest text-black font-bold font-mono">
+                <Calendar className="w-3.5 h-3.5 text-white group-hover:rotate-12 transition-transform shrink-0" />
+                <span className="text-xs uppercase tracking-widest text-white font-semibold font-mono">
                   Book Session
                 </span>
               </Link>
@@ -129,7 +133,7 @@ export default function Navbar({
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`md:hidden p-2 ${scrolled ? 'text-slate-100' : 'text-white'} hover:text-amber-400`}
+            className={`md:hidden p-2 ${isTransparentHeader ? 'text-white' : 'text-slate-100'} hover:text-amber-400`}
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -154,7 +158,7 @@ export default function Navbar({
             <Link
               href="/booking"
               onClick={() => setMobileMenuOpen(false)}
-              className="mt-6 px-8 py-3 rounded-none bg-gradient-to-r from-amber-600 to-amber-500 text-slate-950 font-semibold tracking-widest uppercase text-sm shadow-xl"
+              className="mt-6 px-8 py-3 rounded-none bg-gradient-to-r from-amber-600 to-amber-500 text-white font-semibold tracking-widest uppercase text-sm shadow-xl"
             >
               Book Your Date
             </Link>

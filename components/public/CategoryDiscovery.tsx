@@ -118,14 +118,14 @@ export default function CategoryDiscovery({ categories }: CategoryDiscoveryProps
 
                   {/* Centered Serif Category Name Overlay */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center p-2 sm:p-6 text-center z-10">
-                    <span className="text-[7px] sm:text-[10px] uppercase tracking-[0.2em] font-mono text-amber-400 mb-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 transform sm:translate-y-2 sm:group-hover:translate-y-0">
+                    <span className="text-[7px] sm:text-[10px] uppercase tracking-[0.2em] font-mono text-white mb-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 transform sm:translate-y-2 sm:group-hover:translate-y-0">
                       Explore Gallery
                     </span>
                     <h3 className="text-sm sm:text-4xl md:text-5xl font-serif text-slate-100 group-hover:text-amber-300 transition-colors drop-shadow-lg tracking-wide line-clamp-2">
                       {cat.name}
                     </h3>
                     {cat.description && (
-                      <p className="text-[9px] sm:text-xs text-slate-300 max-w-sm mt-1 font-light opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 transform sm:translate-y-2 sm:group-hover:translate-y-0 line-clamp-2">
+                      <p className="text-[9px] sm:text-xs text-white/90 max-w-sm mt-1 font-light opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 transform sm:translate-y-2 sm:group-hover:translate-y-0 line-clamp-2">
                         {cat.description}
                       </p>
                     )}

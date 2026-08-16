@@ -86,7 +86,7 @@ export default async function ServicesPage() {
               <MagneticButton dataCursor="RESERVE">
                 <Link
                   href="/booking"
-                  className="w-full py-3.5 rounded-none bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-[0.2em] text-center transition-all block shadow-lg"
+                  className="w-full py-3.5 rounded-none bg-amber-500 hover:bg-amber-400 text-white font-semibold text-xs uppercase tracking-[0.2em] text-center transition-all block shadow-lg"
                 >
                   Commission Package
                 </Link>

@@ -70,7 +70,7 @@ export default function AdminLoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin"
+                placeholder="Username or email"
                 autoComplete="off"
                 className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-100 text-sm focus:outline-none focus:border-amber-400 placeholder:text-slate-600"
               />
@@ -98,25 +98,18 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-slate-950 font-semibold text-xs uppercase tracking-widest hover:brightness-110 transition-all flex items-center justify-center gap-2 shadow-xl shadow-amber-900/30"
+            className="w-full py-4 rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-white font-semibold text-xs uppercase tracking-widest hover:brightness-110 transition-all flex items-center justify-center gap-2 shadow-xl shadow-amber-900/30"
           >
             {loading ? (
               <span>Authenticating...</span>
             ) : (
               <>
                 <span>Enter Admin Console</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-white" />
               </>
             )}
           </button>
         </form>
-
-        <div className="mt-8 pt-6 border-t border-slate-800/80 text-center">
-          <p className="text-[11px] text-slate-500 font-mono">
-            Default Admin Credentials:<br />
-            Username: <span className="text-amber-400 font-bold">admin</span> &nbsp;|&nbsp; Password: <span className="text-amber-400 font-bold">admin</span>
-          </p>
-        </div>
       </div>
     </div>
   );

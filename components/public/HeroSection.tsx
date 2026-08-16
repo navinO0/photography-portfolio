@@ -166,7 +166,7 @@ export default function HeroSection({
           <MagneticButton dataCursor="EXPLORE" className="w-full sm:w-auto">
             <Link
               href="/portfolio"
-              className="w-full sm:w-auto px-5 py-3 rounded-none bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-slate-950 font-bold text-[10px] sm:text-[11px] uppercase tracking-[0.2em] hover:brightness-110 transition-all shadow-xl shadow-amber-900/30 text-center block"
+              className="w-full sm:w-auto px-5 py-3 rounded-none bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-white font-semibold text-[10px] sm:text-[11px] uppercase tracking-[0.2em] hover:brightness-110 transition-all shadow-xl shadow-amber-900/30 text-center block"
             >
               {ctaPrimaryText}
             </Link>

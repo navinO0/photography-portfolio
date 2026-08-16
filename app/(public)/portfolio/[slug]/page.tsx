@@ -148,7 +148,7 @@ export default async function ProjectStoryPage({ params }: ProjectStoryPageProps
           <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
             <Link
               href="/booking"
-              className="px-6 py-3.5 sm:px-8 sm:py-4 rounded-none bg-gradient-to-r from-amber-600 to-amber-400 text-slate-950 font-medium text-[10px] sm:text-xs uppercase tracking-[0.2em] hover:brightness-110 transition-all shadow-xl"
+              className="px-6 py-3.5 sm:px-8 sm:py-4 rounded-none bg-gradient-to-r from-amber-600 to-amber-400 text-white font-semibold text-[10px] sm:text-xs uppercase tracking-[0.2em] hover:brightness-110 transition-all shadow-xl"
             >
               Inquire About Your Date
             </Link>
@@ -156,9 +156,9 @@ export default async function ProjectStoryPage({ params }: ProjectStoryPageProps
               href={`https://wa.me/${settings.whatsapp}?text=Hi!%20I%20loved%20the%20${encodeURIComponent(project.title)}%20story.`}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3.5 sm:px-8 sm:py-4 rounded-none bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-medium text-[10px] sm:text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2"
+              className="px-6 py-3.5 sm:px-8 sm:py-4 rounded-none bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-[10px] sm:text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2"
             >
-              <MessageCircle className="w-4 h-4 fill-slate-950" />
+              <MessageCircle className="w-4 h-4 fill-white text-white" />
               <span>WhatsApp Concierge</span>
             </a>
           </div>

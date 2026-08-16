@@ -400,22 +400,22 @@ export default function BookingForm({ whatsappNumber = '15552345678' }: BookingF
             <button
               type="button"
               onClick={handleNext}
-              className="px-8 py-3.5 rounded-none bg-gradient-to-r from-amber-600 to-amber-400 text-slate-950 font-medium text-xs uppercase tracking-widest hover:brightness-110 flex items-center gap-2 shadow-xl shadow-amber-900/20"
+              className="px-8 py-3.5 rounded-none bg-gradient-to-r from-amber-600 to-amber-400 text-white font-semibold text-xs uppercase tracking-widest hover:brightness-110 flex items-center gap-2 shadow-xl shadow-amber-900/20"
             >
               <span>Continue</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 text-white" />
             </button>
           ) : (
             <button
               type="submit"
               disabled={loading}
-              className="px-8 py-3.5 rounded-none bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-slate-950 font-semibold text-xs uppercase tracking-widest hover:brightness-110 flex items-center gap-2 shadow-2xl shadow-amber-900/40"
+              className="px-8 py-3.5 rounded-none bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-white font-semibold text-xs uppercase tracking-widest hover:brightness-110 flex items-center gap-2 shadow-2xl shadow-amber-900/40"
             >
               {loading ? (
                 <span>Submitting...</span>
               ) : (
                 <>
-                  <Send className="w-4 h-4" />
+                  <Send className="w-4 h-4 text-white" />
                   <span>Submit Inquiry</span>
                 </>
               )}

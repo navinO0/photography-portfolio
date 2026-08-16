@@ -165,19 +165,19 @@ export default function PortfolioGrid({ categories, projects }: PortfolioGridPro
 
                   {/* Top-Left Category Badge */}
                   <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20">
-                    <span className="px-3 py-1.5 rounded-none bg-black/90 backdrop-blur-md text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-amber-300 border border-amber-500/40 font-mono font-medium shadow-lg inline-block">
+                    <span className="px-3 py-1.5 rounded-none bg-black/90 backdrop-blur-md text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-white border border-amber-500/40 font-mono font-medium shadow-lg inline-block">
                       {proj.category.name}
                     </span>
                   </div>
 
                   {/* Top-Right Action Arrow & Frame Badge */}
                   <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 flex items-center gap-2">
-                    <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-none bg-black/90 backdrop-blur-md border border-amber-500/40 text-[9px] uppercase font-mono text-amber-400">
+                    <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-none bg-black/90 backdrop-blur-md border border-amber-500/40 text-[9px] uppercase font-mono text-white">
                       <Camera className="w-3 h-3 text-amber-400" />
                       <span>FRAME 0{idx + 1}</span>
                     </span>
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-none bg-black/90 backdrop-blur-md border border-amber-500/40 flex items-center justify-center text-amber-400 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors shadow-lg">
-                      <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-none bg-black/90 backdrop-blur-md border border-amber-500/40 flex items-center justify-center text-white group-hover:bg-amber-500 group-hover:text-white transition-colors shadow-lg">
+                      <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                     </div>
                   </div>
 
@@ -185,7 +185,7 @@ export default function PortfolioGrid({ categories, projects }: PortfolioGridPro
                   <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 z-20 transform group-hover:-translate-y-1 transition-transform duration-500">
                     <div className="flex items-center gap-2 mb-2">
                       <Sparkles className="w-3 h-3 text-amber-400 shrink-0" />
-                      <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-amber-400 font-mono">
+                      <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-white font-mono">
                         {proj.location || 'Studio Exclusive'}
                       </span>
                     </div>

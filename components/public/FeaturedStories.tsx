@@ -168,7 +168,7 @@ export default function FeaturedStories({ projects }: FeaturedStoriesProps) {
 
                   {/* Top Category Badge */}
                   <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20">
-                    <span className="px-3 py-1.5 rounded-none bg-black/90 backdrop-blur-md text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-amber-300 border border-amber-500/40 font-mono font-medium shadow-lg inline-block">
+                    <span className="px-3 py-1.5 rounded-none bg-black/90 backdrop-blur-md text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-white border border-amber-500/40 font-mono font-medium shadow-lg inline-block">
                       {proj.category.name}
                     </span>
                   </div>
@@ -179,15 +179,15 @@ export default function FeaturedStories({ projects }: FeaturedStoriesProps) {
 
                   {/* Card Bottom Content */}
                   <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 z-20">
-                    <div className="flex items-center gap-3 text-[10px] sm:text-xs text-slate-300 font-mono mb-2">
+                    <div className="flex items-center gap-3 text-[10px] sm:text-xs text-white font-mono mb-2">
                       {proj.location && (
-                        <span className="flex items-center gap-1 bg-black/90 backdrop-blur-md px-2 py-0.5 border border-slate-700/80 text-amber-300">
+                        <span className="flex items-center gap-1 bg-black/90 backdrop-blur-md px-2 py-0.5 border border-slate-700/80 text-white">
                           <MapPin className="w-3 h-3 text-amber-400 shrink-0" />
                           <span className="truncate max-w-[140px]">{proj.location}</span>
                         </span>
                       )}
                       {proj.eventDate && (
-                        <span className="flex items-center gap-1 bg-black/90 backdrop-blur-md px-2 py-0.5 border border-slate-700/80 text-amber-300">
+                        <span className="flex items-center gap-1 bg-black/90 backdrop-blur-md px-2 py-0.5 border border-slate-700/80 text-white">
                           <Calendar className="w-3 h-3 text-amber-400 shrink-0" />
                           {new Date(proj.eventDate).getFullYear()}
                         </span>
@@ -198,7 +198,7 @@ export default function FeaturedStories({ projects }: FeaturedStoriesProps) {
                       {proj.title}
                     </h3>
 
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 group-hover:bg-amber-500 text-amber-300 group-hover:text-slate-950 text-xs uppercase tracking-[0.2em] font-mono border border-amber-500/40 group-hover:border-amber-400 transition-all duration-300 font-bold shadow-md">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 group-hover:bg-amber-500 text-white group-hover:text-white text-xs uppercase tracking-[0.2em] font-mono border border-amber-500/40 group-hover:border-amber-400 transition-all duration-300 font-bold shadow-md">
                       <span>Explore Story</span>
                       <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                     </div>
