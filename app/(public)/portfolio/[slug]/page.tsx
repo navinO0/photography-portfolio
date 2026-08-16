@@ -57,7 +57,7 @@ export default async function ProjectStoryPage({ params }: ProjectStoryPageProps
         <div className="absolute top-20 sm:top-28 left-4 sm:left-12 z-30">
           <Link
             href="/portfolio"
-            className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-none bg-black/80 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs uppercase tracking-[0.2em] font-mono text-slate-200 hover:text-amber-400 hover:border-amber-500/50 transition-all shadow-xl"
+            className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-none bg-black/80 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs uppercase tracking-[0.2em] font-mono text-white/90 hover:text-amber-400 hover:border-amber-500/50 transition-all shadow-xl"
           >
             <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
             <span>Back to Portfolio</span>
@@ -81,15 +81,15 @@ export default async function ProjectStoryPage({ params }: ProjectStoryPageProps
             </h1>
 
             {/* Metadata Pills */}
-            <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 text-[10px] sm:text-xs text-slate-200 font-mono pt-1">
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 text-[10px] sm:text-xs text-white/90 font-mono pt-1">
               {project.location && (
-                <span className="flex items-center gap-1.5 px-3 py-1 bg-black/80 backdrop-blur-md border border-white/20 shadow-md">
+                <span className="flex items-center gap-1.5 px-3 py-1 bg-black/80 backdrop-blur-md border border-white/20 shadow-md text-white/90">
                   <MapPin className="w-3.5 h-3.5 text-amber-400" />
                   {project.location}
                 </span>
               )}
               {project.eventDate && (
-                <span className="flex items-center gap-1.5 px-3 py-1 bg-black/80 backdrop-blur-md border border-white/20 shadow-md">
+                <span className="flex items-center gap-1.5 px-3 py-1 bg-black/80 backdrop-blur-md border border-white/20 shadow-md text-white/90">
                   <Calendar className="w-3.5 h-3.5 text-amber-400" />
                   {new Date(project.eventDate).toLocaleDateString('en-US', {
                     month: 'long',
@@ -188,7 +188,7 @@ export default async function ProjectStoryPage({ params }: ProjectStoryPageProps
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="eager"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-85 group-hover:opacity-95 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-85 group-hover:opacity-95 transition-opacity pointer-events-none" />
                   <div className="absolute bottom-1.5 left-1.5 right-1.5 sm:bottom-6 sm:left-6 sm:right-6">
                     <span className="text-[7px] sm:text-[10px] uppercase font-mono text-amber-400 block mb-0.5">
                       {rel.category.name}

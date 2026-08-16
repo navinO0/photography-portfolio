@@ -163,12 +163,12 @@ export default function FeaturedStories({ projects }: FeaturedStoriesProps) {
                     />
                   )}
 
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-300" />
+                  {/* Gradient Overlay (Always dark gradient regardless of theme) */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-90 group-hover:opacity-95 transition-opacity duration-300 pointer-events-none" />
 
                   {/* Top Category Badge */}
                   <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20">
-                    <span className="px-3 py-1.5 rounded-none bg-slate-950/90 text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-amber-300 border border-amber-500/30 font-mono font-medium shadow-lg inline-block">
+                    <span className="px-3 py-1.5 rounded-none bg-black/90 backdrop-blur-md text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-amber-300 border border-amber-500/40 font-mono font-medium shadow-lg inline-block">
                       {proj.category.name}
                     </span>
                   </div>
@@ -181,13 +181,13 @@ export default function FeaturedStories({ projects }: FeaturedStoriesProps) {
                   <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 z-20">
                     <div className="flex items-center gap-3 text-[10px] sm:text-xs text-slate-300 font-mono mb-2">
                       {proj.location && (
-                        <span className="flex items-center gap-1 bg-slate-950/90 px-2 py-0.5 border border-slate-800/80">
+                        <span className="flex items-center gap-1 bg-black/90 backdrop-blur-md px-2 py-0.5 border border-slate-700/80 text-amber-300">
                           <MapPin className="w-3 h-3 text-amber-400 shrink-0" />
                           <span className="truncate max-w-[140px]">{proj.location}</span>
                         </span>
                       )}
                       {proj.eventDate && (
-                        <span className="flex items-center gap-1 bg-slate-950/90 px-2 py-0.5 border border-slate-800/80">
+                        <span className="flex items-center gap-1 bg-black/90 backdrop-blur-md px-2 py-0.5 border border-slate-700/80 text-amber-300">
                           <Calendar className="w-3 h-3 text-amber-400 shrink-0" />
                           {new Date(proj.eventDate).getFullYear()}
                         </span>

@@ -114,7 +114,7 @@ export default function CategoryDiscovery({ categories }: CategoryDiscoveryProps
                     />
                   )}
                   {/* Dark gradient overlay for clear typography contrast */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-85 group-hover:opacity-75 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-85 group-hover:opacity-75 transition-opacity pointer-events-none" />
 
                   {/* Centered Serif Category Name Overlay */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center p-2 sm:p-6 text-center z-10">

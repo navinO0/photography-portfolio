@@ -34,82 +34,95 @@ function PackageCard({
   return (
     <div
       key={srv.id}
-      className="group relative rounded-none overflow-hidden bg-slate-900 border border-slate-800 shadow-2xl transition-all duration-500 hover:border-amber-500/80 min-h-[480px] sm:min-h-[540px] flex flex-col justify-between"
+      className="group relative rounded-none overflow-hidden bg-slate-900/60 backdrop-blur-xl border border-slate-800 shadow-2xl transition-all duration-500 hover:border-amber-500/80 flex flex-col justify-between"
     >
-      {/* Background Image Poster */}
-      <div className="absolute inset-0 z-0">
+      <div>
+        {/* Clean Image Header without Gradient Overlay */}
         {bgImage && !imgError && (
-          /* eslint-disable-next-app-element */
-          <img
-            src={getOptimizedImageUrl(bgImage, 'balanced')}
-            alt={srv.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 block"
-            onError={() => setImgError(true)}
-          />
-        )}
-        {/* Gradient Overlays for Readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-slate-950/70 group-hover:via-black/40 transition-colors" />
-      </div>
+          <div className="relative w-full aspect-[16/10] overflow-hidden bg-slate-950 border-b border-slate-800">
+            {/* eslint-disable-next-app-element */}
+            <img
+              src={getOptimizedImageUrl(bgImage, 'balanced')}
+              alt={srv.name}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 block"
+              onError={() => setImgError(true)}
+            />
 
-      {/* Corner Frame Accents */}
-      <div className="absolute top-0 left-0 w-6 h-6 sm:w-8 sm:h-8 border-l-2 border-t-2 border-amber-400/80 z-20 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
-      <div className="absolute bottom-0 right-0 w-6 h-6 sm:w-8 sm:h-8 border-r-2 border-b-2 border-amber-400/80 z-20 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
+            {/* Corner Frame Accents */}
+            <div className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-amber-400/80 z-20 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 border-amber-400/80 z-20 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
 
-      {/* Top Overlay Badges */}
-      <div className="relative z-10 p-3 sm:p-6 flex items-center justify-between gap-2">
-        <span className="px-2.5 py-1 bg-slate-900/90 backdrop-blur-md text-[8px] sm:text-[10px] uppercase font-mono text-amber-400 border border-amber-500/30">
-          PACKAGE 0{idx + 1}
-        </span>
-
-        {srv.priceStarting && (
-          <span className="px-2.5 py-1 bg-amber-500 text-black font-mono font-bold text-[9px] sm:text-xs uppercase tracking-widest shadow-lg">
-            STARTING {srv.priceStarting}
-          </span>
-        )}
-      </div>
-
-      {/* Bottom Content Overlay Stack */}
-      <div className="relative z-10 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 p-4 sm:p-6 space-y-2.5 sm:space-y-4">
-        {/* Package Title */}
-        <h3 className="text-base sm:text-2xl font-serif text-slate-100 font-normal leading-snug">
-          {srv.name}
-        </h3>
-
-        {/* Description */}
-        <p className="text-[11px] sm:text-xs text-slate-300 font-light leading-relaxed line-clamp-2 overflow-hidden text-ellipsis block">
-          {srv.description}
-        </p>
-
-        {/* Feature Highlights Pills Overlaid */}
-        {featuresList.length > 0 && (
-          <div className="pt-1 flex flex-wrap gap-1.5 sm:gap-2">
-            {featuresList.slice(0, 3).map((feat, fIdx) => (
-              <span
-                key={fIdx}
-                className="px-2 py-0.5 bg-slate-800/90 border border-slate-700/80 text-[9px] sm:text-[10px] font-mono text-slate-200 flex items-center gap-1.5 max-w-full"
-              >
-                <Check className="w-3 h-3 text-amber-400 shrink-0" />
-                <span className="truncate">{feat}</span>
+            {/* Overlay Badges */}
+            <div className="absolute top-3 left-3 right-3 z-10 flex items-center justify-between gap-2">
+              <span className="px-2.5 py-1 bg-black/80 backdrop-blur-md text-[8px] sm:text-[10px] uppercase font-mono text-amber-300 border border-amber-500/40">
+                PACKAGE 0{idx + 1}
               </span>
-            ))}
-            {featuresList.length > 3 && (
-              <span className="px-2 py-0.5 bg-slate-800/90 border border-slate-700/80 text-[9px] font-mono text-amber-400">
-                +{featuresList.length - 3} MORE
-              </span>
-            )}
+
+              {srv.priceStarting && (
+                <span className="px-2.5 py-1 bg-amber-500 text-black font-mono font-bold text-[9px] sm:text-xs uppercase tracking-widest shadow-lg">
+                  STARTING {srv.priceStarting}
+                </span>
+              )}
+            </div>
           </div>
         )}
 
-        {/* Action CTA Button */}
-        <div className="pt-1.5">
-          <Link
-            href="/booking"
-            className="w-full py-2.5 sm:py-3 px-4 rounded-none bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-[0.2em] text-center transition-all flex items-center justify-center gap-2 shadow-xl"
-          >
-            <span>Commission Package</span>
-            <ArrowUpRight className="w-4 h-4 text-black" />
-          </Link>
+        {/* Card Content Stack */}
+        <div className="p-5 sm:p-6 space-y-3">
+          {(!bgImage || imgError) && (
+            <div className="flex items-center justify-between gap-2 mb-2">
+              <span className="px-2.5 py-1 bg-black/80 backdrop-blur-md text-[8px] sm:text-[10px] uppercase font-mono text-amber-300 border border-amber-500/40">
+                PACKAGE 0{idx + 1}
+              </span>
+              {srv.priceStarting && (
+                <span className="px-2.5 py-1 bg-amber-500 text-black font-mono font-bold text-[9px] sm:text-xs uppercase tracking-widest shadow-lg">
+                  STARTING {srv.priceStarting}
+                </span>
+              )}
+            </div>
+          )}
+
+          {/* Package Title */}
+          <h3 className="text-lg sm:text-2xl font-serif text-slate-100 font-normal leading-snug">
+            {srv.name}
+          </h3>
+
+          {/* Description */}
+          <p className="text-xs text-slate-300 font-light leading-relaxed line-clamp-3">
+            {srv.description}
+          </p>
+
+          {/* Feature Highlights Pills */}
+          {featuresList.length > 0 && (
+            <div className="pt-2 flex flex-wrap gap-1.5 sm:gap-2">
+              {featuresList.slice(0, 3).map((feat, fIdx) => (
+                <span
+                  key={fIdx}
+                  className="px-2.5 py-1 bg-slate-800/80 border border-slate-700/80 text-[9px] sm:text-[10px] font-mono text-slate-200 flex items-center gap-1.5 max-w-full"
+                >
+                  <Check className="w-3 h-3 text-amber-400 shrink-0" />
+                  <span className="truncate">{feat}</span>
+                </span>
+              ))}
+              {featuresList.length > 3 && (
+                <span className="px-2.5 py-1 bg-slate-800/80 border border-slate-700/80 text-[9px] font-mono text-amber-400">
+                  +{featuresList.length - 3} MORE
+                </span>
+              )}
+            </div>
+          )}
         </div>
+      </div>
+
+      {/* Action CTA Button */}
+      <div className="p-5 sm:p-6 pt-0">
+        <Link
+          href="/booking"
+          className="w-full py-3 px-4 rounded-none bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-[0.2em] text-center transition-all flex items-center justify-center gap-2 shadow-xl"
+        >
+          <span>Commission Package</span>
+          <ArrowUpRight className="w-4 h-4 text-black" />
+        </Link>
       </div>
     </div>
   );

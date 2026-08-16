@@ -137,7 +137,7 @@ export default function ThreeGalleryShowcase({ projects }: ThreeGalleryShowcaseP
                 alt={proj.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-90 pointer-events-none" />
               
               <div className="absolute bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-5 z-10">
                 <span className="text-[9px] uppercase font-mono text-amber-400 block mb-0.5">

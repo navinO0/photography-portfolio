@@ -98,7 +98,7 @@ export default function HeroSection({
   };
 
   return (
-    <section className={`relative w-full h-[85vh] min-h-[500px] sm:min-h-[700px] flex overflow-hidden bg-black ${getSectionAlignment()}`}>
+    <section className={`relative w-full h-screen min-h-screen flex overflow-hidden bg-black ${getSectionAlignment()}`}>
       {/* 3D Particle Ambient Canvas */}
       <Hero3DCanvas />
 
@@ -139,10 +139,10 @@ export default function HeroSection({
       <div className={`absolute inset-0 bg-gradient-to-r ${getGradientOpacity()} z-10`} />
 
       {/* Matrix Code / Coordinates Overlay Top-Right */}
-      <div className="absolute top-24 sm:top-28 right-4 md:right-12 z-20 hidden sm:flex flex-col items-end gap-1 font-mono text-[10px] uppercase tracking-[0.25em] text-amber-400/80">
+      <div className="absolute top-24 sm:top-28 right-4 md:right-12 z-20 hidden sm:flex flex-col items-end gap-1 font-mono text-[10px] uppercase tracking-[0.25em] text-amber-400/90">
         <span>[SYS.LOC] 40.7128° N, 74.0060° W</span>
         <span>0{(currentIdx % activeImages.length) + 1} // 0{activeImages.length} FRAME_INDEX</span>
-        <span className="text-slate-400">ISO 100 • 35MM F/1.4</span>
+        <span className="text-white/70">ISO 100 • 35MM F/1.4</span>
       </div>
 
       {/* Configurable Hero Content Container */}
@@ -156,7 +156,7 @@ export default function HeroSection({
 
         {/* Hero Subtitle */}
         <TextReveal delay={0.2} className="mb-5 sm:mb-6 max-w-lg">
-          <p className="text-[11px] sm:text-xs md:text-sm text-slate-200 font-light leading-relaxed">
+          <p className="text-[11px] sm:text-xs md:text-sm text-white/90 font-light leading-relaxed drop-shadow-md">
             {subtitle}
           </p>
         </TextReveal>

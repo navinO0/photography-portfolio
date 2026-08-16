@@ -150,7 +150,7 @@ export default async function ServicesPage() {
                 alt="Archive Treasury"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent opacity-70 group-hover:opacity-50 transition-opacity pointer-events-none" />
 
               {/* Corner Frame Accents */}
               <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-amber-400/80 z-20 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
@@ -158,7 +158,7 @@ export default async function ServicesPage() {
 
               {/* Frame Index Overlay */}
               <div className="absolute top-1.5 left-1.5 sm:top-4 sm:left-4 z-20">
-                <span className="px-1.5 py-0.5 sm:px-3 sm:py-1 bg-slate-950/80 backdrop-blur-md text-[7px] sm:text-[9px] uppercase font-mono text-amber-400 border border-amber-500/30">
+                <span className="px-1.5 py-0.5 sm:px-3 sm:py-1 bg-black/90 backdrop-blur-md text-[7px] sm:text-[9px] uppercase font-mono text-amber-400 border border-amber-500/30">
                   TREASURY 0{idx + 1}
                 </span>
               </div>
