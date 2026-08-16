@@ -20,6 +20,7 @@ interface Project {
   slug: string;
   coverImage: string;
   location?: string | null;
+  eventDate?: string | Date | null;
   category: { name: string; slug: string };
   layoutMode?: string;
 }
