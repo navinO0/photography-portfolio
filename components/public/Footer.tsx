@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { Camera, Mail, Phone, MapPin, ArrowUpRight, Share2, Video, Globe } from 'lucide-react';
 
@@ -15,15 +16,6 @@ interface FooterProps {
   youtubeUrl?: string;
   instagramPosts?: string[];
 }
-
-const INSTAGRAM_PREVIEWS = [
-  'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=400&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=400&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=400&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=400&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=400&auto=format&fit=crop',
-];
 
 function InstagramIcon({ className = 'w-4 h-4' }: { className?: string }) {
   return (
@@ -47,10 +39,24 @@ export default function Footer({
   youtubeUrl = 'https://youtube.com',
   instagramPosts,
 }: FooterProps) {
-  const postsToDisplay = instagramPosts && instagramPosts.length > 0 ? instagramPosts : INSTAGRAM_PREVIEWS;
+  const [failedIndices, setFailedIndices] = useState<Record<number, boolean>>({});
+
+  // Only consider posts if provided as non-empty string URLs
+  const rawPosts = Array.isArray(instagramPosts)
+    ? instagramPosts.filter((url) => typeof url === 'string' && url.trim().length > 0)
+    : [];
+
+  const handleImageError = (idx: number) => {
+    setFailedIndices((prev) => ({ ...prev, [idx]: true }));
+  };
+
+  const validPosts = rawPosts
+    .map((url, idx) => ({ url, idx }))
+    .filter((item) => !failedIndices[item.idx]);
+
   return (
     <footer className="bg-slate-950 text-slate-400 border-t border-slate-900 relative overflow-hidden">
-      {/* 1. Get In Touch Callout Section (Inspired by Screenshot 1) */}
+      {/* 1. Get In Touch Callout Section */}
       <div className="py-8 sm:py-12 border-b border-slate-900 text-center bg-slate-950/80 relative z-10">
         <div className="max-w-3xl mx-auto px-6">
           <span className="text-xs uppercase tracking-[0.3em] font-mono text-amber-400 block mb-2 sm:mb-3">
@@ -68,44 +74,48 @@ export default function Footer({
         </div>
       </div>
 
-      {/* 2. Instagram Showcase Feed Grid (Inspired by Screenshot 1) */}
-      <div className="py-6 sm:py-10 border-b border-slate-900">
-        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8">
-          <div className="text-center mb-4 sm:mb-6">
-            <a
-              href={instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs uppercase tracking-[0.3em] font-mono text-amber-400 hover:text-amber-300 inline-flex items-center gap-2"
-            >
-              <InstagramIcon className="w-4 h-4" />
-              <span>FOLLOW US ON INSTAGRAM</span>
-            </a>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            {postsToDisplay.map((img, idx) => (
+      {/* 2. Instagram Showcase Feed Grid (Only shown if valid provided images exist and load successfully) */}
+      {validPosts.length > 0 && (
+        <div className="py-6 sm:py-10 border-b border-slate-900">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8">
+            <div className="text-center mb-4 sm:mb-6">
               <a
-                key={idx}
                 href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative aspect-square overflow-hidden bg-slate-900 border border-slate-800 rounded-none block"
+                className="text-xs uppercase tracking-[0.3em] font-mono text-amber-400 hover:text-amber-300 inline-flex items-center gap-2"
               >
-                {/* eslint-disable-next-app-element */}
-                <img
-                  src={img}
-                  alt={`Instagram Post Preview ${idx + 1}`}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-amber-400">
-                  <InstagramIcon className="w-6 h-6" />
-                </div>
+                <InstagramIcon className="w-4 h-4" />
+                <span>FOLLOW US ON INSTAGRAM</span>
               </a>
-            ))}
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+              {validPosts.map((post) => (
+                <a
+                  key={post.idx}
+                  href={instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative aspect-square overflow-hidden bg-slate-900 border border-slate-800 rounded-none block"
+                >
+                  {/* eslint-disable-next-app-element */}
+                  <img
+                    src={post.url}
+                    alt={`Instagram Post Preview ${post.idx + 1}`}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    onError={() => handleImageError(post.idx)}
+                  />
+                  <div className="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-amber-400">
+                    <InstagramIcon className="w-6 h-6" />
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
 
       {/* 3. Main Footer Links */}
       <div className="max-w-7xl mx-auto px-6 py-8 sm:py-10 relative z-10">

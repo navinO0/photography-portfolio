@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Check, Sparkles, ArrowUpRight, Camera, Zap } from 'lucide-react';
+import { Check, ArrowUpRight } from 'lucide-react';
 import { getOptimizedImageUrl } from '@/lib/image-optimization';
 
 interface ServicePackage {
@@ -18,12 +18,102 @@ interface PackagesImageShowcaseProps {
   services: ServicePackage[];
 }
 
-const DEFAULT_PACKAGE_IMAGES = [
-  'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1200&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1200&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1200&auto=format&fit=crop',
-];
+function PackageCard({
+  srv,
+  idx,
+  bgImage,
+  featuresList,
+}: {
+  srv: ServicePackage;
+  idx: number;
+  bgImage?: string | null;
+  featuresList: string[];
+}) {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <div
+      key={srv.id}
+      className="group relative rounded-none overflow-hidden bg-slate-900 border border-slate-800 shadow-2xl transition-all duration-500 hover:border-amber-500/80 min-h-[480px] sm:min-h-[540px] flex flex-col justify-between"
+    >
+      {/* Background Image Poster */}
+      <div className="absolute inset-0 z-0">
+        {bgImage && !imgError && (
+          /* eslint-disable-next-app-element */
+          <img
+            src={getOptimizedImageUrl(bgImage, 'balanced')}
+            alt={srv.name}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 block"
+            onError={() => setImgError(true)}
+          />
+        )}
+        {/* Gradient Overlays for Readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-slate-950/70 group-hover:via-black/40 transition-colors" />
+      </div>
+
+      {/* Corner Frame Accents */}
+      <div className="absolute top-0 left-0 w-6 h-6 sm:w-8 sm:h-8 border-l-2 border-t-2 border-amber-400/80 z-20 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute bottom-0 right-0 w-6 h-6 sm:w-8 sm:h-8 border-r-2 border-b-2 border-amber-400/80 z-20 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
+
+      {/* Top Overlay Badges */}
+      <div className="relative z-10 p-3 sm:p-6 flex items-center justify-between gap-2">
+        <span className="px-2.5 py-1 bg-slate-900/90 backdrop-blur-md text-[8px] sm:text-[10px] uppercase font-mono text-amber-400 border border-amber-500/30">
+          PACKAGE 0{idx + 1}
+        </span>
+
+        {srv.priceStarting && (
+          <span className="px-2.5 py-1 bg-amber-500 text-black font-mono font-bold text-[9px] sm:text-xs uppercase tracking-widest shadow-lg">
+            STARTING {srv.priceStarting}
+          </span>
+        )}
+      </div>
+
+      {/* Bottom Content Overlay Stack */}
+      <div className="relative z-10 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 p-4 sm:p-6 space-y-2.5 sm:space-y-4">
+        {/* Package Title */}
+        <h3 className="text-base sm:text-2xl font-serif text-slate-100 font-normal leading-snug">
+          {srv.name}
+        </h3>
+
+        {/* Description */}
+        <p className="text-[11px] sm:text-xs text-slate-300 font-light leading-relaxed line-clamp-2 overflow-hidden text-ellipsis block">
+          {srv.description}
+        </p>
+
+        {/* Feature Highlights Pills Overlaid */}
+        {featuresList.length > 0 && (
+          <div className="pt-1 flex flex-wrap gap-1.5 sm:gap-2">
+            {featuresList.slice(0, 3).map((feat, fIdx) => (
+              <span
+                key={fIdx}
+                className="px-2 py-0.5 bg-slate-800/90 border border-slate-700/80 text-[9px] sm:text-[10px] font-mono text-slate-200 flex items-center gap-1.5 max-w-full"
+              >
+                <Check className="w-3 h-3 text-amber-400 shrink-0" />
+                <span className="truncate">{feat}</span>
+              </span>
+            ))}
+            {featuresList.length > 3 && (
+              <span className="px-2 py-0.5 bg-slate-800/90 border border-slate-700/80 text-[9px] font-mono text-amber-400">
+                +{featuresList.length - 3} MORE
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Action CTA Button */}
+        <div className="pt-1.5">
+          <Link
+            href="/booking"
+            className="w-full py-2.5 sm:py-3 px-4 rounded-none bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-[0.2em] text-center transition-all flex items-center justify-center gap-2 shadow-xl"
+          >
+            <span>Commission Package</span>
+            <ArrowUpRight className="w-4 h-4 text-black" />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function PackagesImageShowcase({ services }: PackagesImageShowcaseProps) {
   if (!services || services.length === 0) return null;
@@ -53,90 +143,20 @@ export default function PackagesImageShowcase({ services }: PackagesImageShowcas
           </Link>
         </div>
 
-        {/* Editorial Packages Grid (Details Overlaid Directly On High-Fashion Images) */}
+        {/* Editorial Packages Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-6 md:gap-8">
           {services.map((srv, idx) => {
-            const bgImage = srv.image || DEFAULT_PACKAGE_IMAGES[idx % DEFAULT_PACKAGE_IMAGES.length];
+            const bgImage = srv.image || null;
             const featuresList = (Array.isArray(srv.features) ? srv.features : []) as string[];
 
             return (
-              <div
+              <PackageCard
                 key={srv.id}
-                className="group relative rounded-none overflow-hidden bg-slate-900 border border-slate-800 shadow-2xl transition-all duration-500 hover:border-amber-500/80 min-h-[480px] sm:min-h-[540px] flex flex-col justify-between"
-              >
-                {/* Background Image Poster */}
-                <div className="absolute inset-0 z-0">
-                  {/* eslint-disable-next-app-element */}
-                  <img
-                    src={getOptimizedImageUrl(bgImage, 'balanced')}
-                    alt={srv.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 block"
-                  />
-                  {/* Gradient Overlays for Readability */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:via-black/30 transition-colors" />
-                </div>
-
-                {/* Corner Frame Accents */}
-                <div className="absolute top-0 left-0 w-6 h-6 sm:w-8 sm:h-8 border-l-2 border-t-2 border-amber-400/80 z-20 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute bottom-0 right-0 w-6 h-6 sm:w-8 sm:h-8 border-r-2 border-b-2 border-amber-400/80 z-20 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
-
-                {/* Top Overlay Badges */}
-                <div className="relative z-10 p-3 sm:p-6 flex items-center justify-between gap-2">
-                  <span className="px-2.5 py-1 bg-slate-900/90 backdrop-blur-md text-[8px] sm:text-[10px] uppercase font-mono text-amber-400 border border-amber-500/30">
-                    PACKAGE 0{idx + 1}
-                  </span>
-
-                  {srv.priceStarting && (
-                    <span className="px-2.5 py-1 bg-amber-500 text-black font-mono font-bold text-[9px] sm:text-xs uppercase tracking-widest shadow-lg">
-                      STARTING {srv.priceStarting}
-                    </span>
-                  )}
-                </div>
-
-                {/* Bottom Content Overlay Stack - Adapts dynamically to selected light/dark theme */}
-                <div className="relative z-10 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 p-4 sm:p-6 space-y-2.5 sm:space-y-4">
-                  {/* Package Title */}
-                  <h3 className="text-base sm:text-2xl font-serif text-slate-100 font-normal leading-snug">
-                    {srv.name}
-                  </h3>
-
-                  {/* Description - Dynamic text color adapting to light/dark theme */}
-                  <p className="text-[11px] sm:text-xs text-slate-300 font-light leading-relaxed line-clamp-2 overflow-hidden text-ellipsis block">
-                    {srv.description}
-                  </p>
-
-                  {/* Feature Highlights Pills Overlaid */}
-                  {featuresList.length > 0 && (
-                    <div className="pt-1 flex flex-wrap gap-1.5 sm:gap-2">
-                      {featuresList.slice(0, 3).map((feat, fIdx) => (
-                        <span
-                          key={fIdx}
-                          className="px-2 py-0.5 bg-slate-800/90 border border-slate-700/80 text-[9px] sm:text-[10px] font-mono text-slate-200 flex items-center gap-1.5 max-w-full"
-                        >
-                          <Check className="w-3 h-3 text-amber-400 shrink-0" />
-                          <span className="truncate">{feat}</span>
-                        </span>
-                      ))}
-                      {featuresList.length > 3 && (
-                        <span className="px-2 py-0.5 bg-slate-800/90 border border-slate-700/80 text-[9px] font-mono text-amber-400">
-                          +{featuresList.length - 3} MORE
-                        </span>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Action CTA Button */}
-                  <div className="pt-1.5">
-                    <Link
-                      href="/booking"
-                      className="w-full py-2.5 sm:py-3 px-4 rounded-none bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-[0.2em] text-center transition-all flex items-center justify-center gap-2 shadow-xl"
-                    >
-                      <span>Commission Package</span>
-                      <ArrowUpRight className="w-4 h-4 text-black" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
+                srv={srv}
+                idx={idx}
+                bgImage={bgImage}
+                featuresList={featuresList}
+              />
             );
           })}
         </div>

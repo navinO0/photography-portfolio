@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from './gsap';
 
 interface ParallaxImageProps {
-  src: string;
+  src?: string | null;
   alt: string;
   className?: string;
   speed?: number;
@@ -18,6 +18,7 @@ export default function ParallaxImage({
   speed = 0.2,
   dataCursorImg,
 }: ParallaxImageProps) {
+  const [hasError, setHasError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
 
@@ -28,7 +29,7 @@ export default function ParallaxImage({
   }, [src]);
 
   useEffect(() => {
-    if (!containerRef.current || !imgRef.current) return;
+    if (!containerRef.current || !imgRef.current || hasError || !src) return;
 
     const isTouch =
       'ontouchstart' in window ||
@@ -60,7 +61,11 @@ export default function ParallaxImage({
     }, containerRef);
 
     return () => ctx.revert();
-  }, [speed]);
+  }, [speed, hasError, src]);
+
+  if (!src || src.trim() === '' || hasError) {
+    return null;
+  }
 
   return (
     <div
@@ -74,7 +79,9 @@ export default function ParallaxImage({
         alt={alt}
         className="w-full h-full object-cover transform-gpu"
         loading="eager"
+        onError={() => setHasError(true)}
       />
     </div>
   );
 }
+

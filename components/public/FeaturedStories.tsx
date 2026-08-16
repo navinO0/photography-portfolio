@@ -150,13 +150,18 @@ export default function FeaturedStories({ projects }: FeaturedStoriesProps) {
               >
                 <Link href={`/portfolio/${proj.slug}`} className="block w-full h-full relative overflow-hidden">
                   {/* Image */}
-                  {/* eslint-disable-next-app-element */}
-                  <img
-                    src={getOptimizedImageUrl(proj.coverImage, 'balanced')}
-                    alt={proj.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    loading="eager"
-                  />
+                  {proj.coverImage && (
+                    /* eslint-disable-next-app-element */
+                    <img
+                      src={getOptimizedImageUrl(proj.coverImage, 'balanced')}
+                      alt={proj.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      loading="eager"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLElement).style.display = 'none';
+                      }}
+                    />
+                  )}
 
                   {/* Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-300" />
@@ -216,13 +221,18 @@ export default function FeaturedStories({ projects }: FeaturedStoriesProps) {
               data-cursor-img={proj.coverImage}
             >
               <div className="aspect-[4/5] relative overflow-hidden">
-                {/* eslint-disable-next-app-element */}
-                <img
-                  src={proj.coverImage}
-                  alt={proj.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                  loading="eager"
-                />
+                {proj.coverImage && (
+                  /* eslint-disable-next-app-element */
+                  <img
+                    src={proj.coverImage}
+                    alt={proj.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    loading="eager"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLElement).style.display = 'none';
+                    }}
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-85 group-hover:opacity-95 transition-opacity" />
 
                 <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10">
